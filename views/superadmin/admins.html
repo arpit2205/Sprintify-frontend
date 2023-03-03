@@ -1,0 +1,77 @@
+<h1>Create brand admin</h1>
+<form
+  id="create-admin-form"
+  novalidate
+  name="createAdminForm"
+  ng-submit="handleCreateAdmin()"
+>
+  <div id="account-form-div">
+    <input
+      type="text"
+      name="name"
+      placeholder="Name"
+      ng-required="true"
+      ng-model="createAdmin.name"
+    />
+
+    <input
+      type="text"
+      name="email"
+      placeholder="Email"
+      ng-required="true"
+      ng-model="createAdmin.email"
+    />
+
+    <input
+      type="password"
+      name="password"
+      placeholder="Password"
+      ng-required="true"
+      ng-model="createAdmin.password"
+    />
+  </div>
+
+  <div id="brand-form-div">
+    <input
+      type="text"
+      name="brandName"
+      placeholder="Brand Name"
+      ng-required="true"
+      ng-model="createAdmin.brandName"
+    />
+
+    <input
+      type="text"
+      name="logoUrl"
+      placeholder="Logo URL"
+      ng-required="true"
+      ng-model="createAdmin.logoUrl"
+    />
+  </div>
+
+  <button
+    type="submit"
+    id="create-admin-btn"
+    ng-disabled="createAdminForm.$invalid"
+  >
+    Create
+  </button>
+</form>
+
+<h1 id="active-brand-admins-title">Active brand admins</h1>
+<table id="active-admins-table">
+  <tr id="table-header">
+    <th>Name</th>
+    <th>Email</th>
+    <th>Role</th>
+    <th>Brand name</th>
+    <th>Created at</th>
+  </tr>
+  <tr ng-repeat="admin in brandAdmins" id="table-data">
+    <td>{{admin.name}}</td>
+    <td>{{admin.email}}</td>
+    <td>Admin</td>
+    <td>{{admin.brand.name}}</td>
+    <td>{{admin.createdAt}}</td>
+  </tr>
+</table>

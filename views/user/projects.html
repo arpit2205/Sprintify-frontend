@@ -1,0 +1,43 @@
+<div id="user-container">
+  <div id="user-home-wrapper">
+    <nav ng-include="'./views/user/nav.html'"></nav>
+
+    <div id="user-body">
+      <div id="user-sidebar">
+        <div id="brand-info">
+          <img src="{{authUser.brand.logoUrl}}" alt="" />
+          <div id="brand-name-div">
+            <h4>{{authUser.brand.name}}</h4>
+            <p>{{authUser.email}}</p>
+          </div>
+        </div>
+      </div>
+      <div id="projects-container">
+        <div id="projects-header">
+          <h2 id="projects-container-title">Active projects</h2>
+          <button id="create-project-btn" class="btn-blue-shadow">
+            <i class="fa-regular fa-plus icon-mr"></i>Create project
+          </button>
+        </div>
+
+        <div></div>
+
+        <div id="projects-list">
+          <div
+            ng-repeat="project in projects"
+            class="project-div"
+            ng-click="handleSelectProject(project)"
+          >
+            <img src="../../assets/project-placeholder.png" />
+            <div class="project-div-content">
+              <p class="project-status">{{project.status}}</p>
+              <h4 class="project-title">{{project.title}}</h4>
+              <p>{{project.description}}</p>
+              <p class="project-owner">Lead by {{project.owner.name}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

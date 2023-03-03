@@ -1,0 +1,25 @@
+<div id="super-admin-container">
+  <div id="super-admin-home-wrapper">
+    <nav ng-include="'./views/superadmin/nav.html'"></nav>
+
+    <div id="super-admin-body">
+      <div id="super-admin-sidebar">
+        <div id="brand-info">
+          <img
+            src="https://i.ibb.co/JqyV7Q0/channels4-profile-removebg-preview.png"
+            alt=""
+          />
+          <div id="brand-name-div">
+            <h4>Posist</h4>
+            <p>superadmin@posist.com</p>
+          </div>
+        </div>
+        <a ui-sref="superadmin.admins" ui-sref-active="active">Admins</a
+        ><a href="">Other</a>
+      </div>
+      <div id="super-admin-page">
+        <ui-view></ui-view>
+      </div>
+    </div>
+  </div>
+</div>

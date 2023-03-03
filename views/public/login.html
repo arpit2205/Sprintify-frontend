@@ -1,0 +1,42 @@
+<div id="login-container">
+  <div id="login-card">
+    <img ng-src="../assets/posist-logo.png" />
+    <h4>Log in to continue</h4>
+    <form id="login-form" novalidate name="loginForm" ng-submit="handleLogin()">
+      <input
+        type="text"
+        name="email"
+        placeholder="Email"
+        ng-required="true"
+        ng-model="login.email"
+      />
+      <p
+        ng-show="loginForm.email.$touched && loginForm.email.$invalid"
+        class="error-field"
+      >
+        Enter an email
+      </p>
+      <input
+        type="password"
+        placeholder="Password"
+        name="password"
+        ng-required="true"
+        ng-model="login.password"
+      />
+      <p
+        ng-show="loginForm.password.$touched && loginForm.password.$invalid"
+        class="error-field"
+      >
+        Enter a password
+      </p>
+      <button type="submit" id="login-btn" ng-disabled="loginForm.$invalid">
+        Log in
+      </button>
+
+      <p ng-show="login.error" class="error-field">{{login.error}}</p>
+    </form>
+  </div>
+
+  <img id="login-bg-img-one" ng-src="../assets/login-img-one.jpg" />
+  <img id="login-bg-img-two" ng-src="../assets/login-img-two.jpg" />
+</div>

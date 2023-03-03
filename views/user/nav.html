@@ -1,0 +1,10 @@
+<div id="user-nav">
+  <div id="nav-left">
+    <img ng-src="../../assets/posist-logo.png" />
+    <a ui-sref="projects">All Projects</a>
+  </div>
+  <div id="nav-right">
+    <h4>{{authUser.name}}</h4>
+    <button class="button-secondary" ng-click="handleLogout()">Logout</button>
+  </div>
+</div>

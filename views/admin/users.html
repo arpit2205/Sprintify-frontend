@@ -1,0 +1,68 @@
+<h1>Create users</h1>
+<form
+  id="create-user-form"
+  novalidate
+  name="createUserForm"
+  ng-submit="handleCreateUser()"
+>
+  <div id="account-form-div">
+    <input
+      type="text"
+      name="name"
+      placeholder="Name"
+      ng-required="true"
+      ng-model="createUser.name"
+    />
+
+    <input
+      type="text"
+      name="email"
+      placeholder="Email"
+      ng-required="true"
+      ng-model="createUser.email"
+    />
+
+    <input
+      type="password"
+      name="password"
+      placeholder="Password"
+      ng-required="true"
+      ng-model="createUser.password"
+    />
+
+    <select name="role" placeholder="Role" ng-model="createUser.role" required>
+      <option value="" disabled selected>Role</option>
+      <option value="manager">Manager</option>
+      <option value="member">Member</option>
+    </select>
+  </div>
+
+  <button
+    type="submit"
+    id="create-user-btn"
+    ng-disabled="createUserForm.$invalid"
+  >
+    Create
+  </button>
+</form>
+
+<h1 id="active-users-title">Active users</h1>
+<table id="active-users-table">
+  <tr id="table-header">
+    <th>Name</th>
+    <th>Email</th>
+    <th>Role</th>
+    <th>Brand name</th>
+    <th>Created at</th>
+  </tr>
+
+  <tr ng-repeat="user in brandUsers" id="table-data">
+    <td>{{user.name}}</td>
+    <td>{{user.email}}</td>
+    <td>
+      User ({{user.roles.indexOf('member') === -1 ? 'Manager' : 'Member'}})
+    </td>
+    <td>{{user.brand.name}}</td>
+    <td>{{user.createdAt}}</td>
+  </tr>
+</table>

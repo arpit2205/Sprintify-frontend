@@ -1,0 +1,45 @@
+#user-nav {
+  width: 100%;
+  padding: 8px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+#user-nav img {
+  width: 160px;
+}
+
+#nav-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+#nav-right h4 {
+  text-align: right;
+  width: 200px;
+  margin-right: 24px;
+}
+
+#nav-left {
+  width: 100%;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+#nav-left a {
+  margin-left: 24px;
+  font-weight: bold;
+}
+
+#nav-right button {
+  background-color: white;
+  border: 2px solid var(--primary-blue);
+  font-weight: bold;
+  color: var(--primary-blue);
+  font-size: 16px;
+  padding: 12px 20px;
+}

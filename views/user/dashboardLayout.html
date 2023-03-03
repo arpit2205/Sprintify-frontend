@@ -1,0 +1,24 @@
+<div id="user-container">
+  <div id="user-home-wrapper">
+    <nav ng-include="'./views/user/nav.html'"></nav>
+
+    <div id="user-body">
+      <div id="user-sidebar">
+        <div id="brand-info">
+          <img src="{{authUser.brand.logoUrl}}" alt="" />
+          <div id="brand-name-div">
+            <h4>{{authUser.brand.name}}</h4>
+            <p>{{authUser.email}}</p>
+          </div>
+        </div>
+        <a ui-sref="user.dashboard" ui-sref-active="active">Dashboard</a>
+        <a ui-sref="user.backlog" ui-sref-active="active">Backlog</a
+        ><a ui-sref="user.sprints" ui-sref-active="active">Sprints</a>
+        <a ui-sref="user.board" ui-sref-active="active">Board</a>
+      </div>
+      <div id="user-page">
+        <ui-view></ui-view>
+      </div>
+    </div>
+  </div>
+</div>

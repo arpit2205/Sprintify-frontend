@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- AngularJs script -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+    <!-- Angularjs routing -->
+    <!-- <script src="https://code.angularjs.org/1.8.2/angular-route.min.js"></script> -->
+
+    <!-- Angular UI router -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.30/angular-ui-router.min.js"></script>
+
+    <!-- Angular JWT -->
+    <script src="node_modules/angular-jwt/dist/angular-jwt.min.js"></script>
+
+    <!-- Angular global app module -->
+    <script src="./app.js"></script>
+
+    <!-- Controllers -->
+    <script src="./controllers/public/loginController.js"></script>
+    <script src="./controllers/superadmin/resetPasswordController.js"></script>
+    <script src="./controllers/superadmin/homeController.js"></script>
+    <script src="./controllers/admin/homeController.js"></script>
+    <script src="./controllers/user/homeController.js"></script>
+    <script src="./controllers/user/projectsController.js"></script>
+
+    <!-- Services -->
+    <script src="./services/public/loginService.js"></script>
+    <script src="./services/superadmin/resetPasswordService.js"></script>
+    <script src="./services/superadmin/createAdminService.js"></script>
+    <script src="./services/admin/createUserService.js"></script>
+    <script src="./services/user/projectService.js"></script>
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="./styles/globalStyles.css" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./styles/public/login.css" />
+    <link rel="stylesheet" href="./styles/superadmin/reset-password.css" />
+    <link rel="stylesheet" href="./styles/superadmin/home.css" />
+    <link rel="stylesheet" href="./styles/superadmin/nav.css" />
+    <link rel="stylesheet" href="./styles/admin/home.css" />
+    <link rel="stylesheet" href="./styles/admin/nav.css" />
+    <link rel="stylesheet" href="./styles/user/nav.css" />
+    <link rel="stylesheet" href="./styles/user/dashboardLayout.css" />
+    <link rel="stylesheet" href="./styles/user/projects.css" />
+
+    <title>POSIST Sprints</title>
+  </head>
+  <body ng-app="app">
+    <!-- <div id="root" ng-controller="appController"> -->
+    <!-- <div ng-view></div> -->
+    <!-- </div> -->
+    <div id="root" ng-controller="appController">
+      <!-- <a ui-sref="login">login</a> -->
+      <ui-view></ui-view>
+    </div>
+
+    <!-- Fontawesome -->
+    <script
+      src="https://kit.fontawesome.com/f2c150d561.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    />
+  </body>
+</html>

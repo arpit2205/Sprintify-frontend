@@ -1,0 +1,22 @@
+<div id="admin-container">
+  <div id="admin-home-wrapper">
+    <nav ng-include="'./views/admin/nav.html'"></nav>
+
+    <div id="admin-body">
+      <div id="admin-sidebar">
+        <div id="brand-info">
+          <img src="{{authUser.brand.logoUrl}}" alt="" />
+          <div id="brand-name-div">
+            <h4>{{authUser.brand.name}}</h4>
+            <p>{{authUser.email}}</p>
+          </div>
+        </div>
+        <a ui-sref="admin.users" ui-sref-active="active">Users</a
+        ><a href="">Other</a>
+      </div>
+      <div id="admin-page">
+        <ui-view></ui-view>
+      </div>
+    </div>
+  </div>
+</div>
