@@ -15,6 +15,7 @@ angular.module("app").factory("loginService", [
         $rootScope.brandUsers = null;
         $rootScope.projects = null;
         $rootScope.activeProject = null;
+        $rootScope.users = null;
         $location.path("/login");
       },
     };

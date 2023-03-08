@@ -1,1 +1,95 @@
-backlog
+<div id="backlog-container">
+  <h2 id="backlog-title">Project backlog</h2>
+
+  <div id="create-task-section">
+    <h4 id="create-task-title">Create a new task</h4>
+    <form
+      id="create-task-form"
+      novalidate
+      name="createTaskForm"
+      ng-submit="handleCreateTask()"
+    >
+      <input
+        type="text"
+        name="title"
+        placeholder="What has to be done"
+        ng-required="true"
+        ng-model="createTask.title"
+        id="create-task-title-input"
+      />
+
+      <select
+        id="create-task-type"
+        name="type"
+        placeholder="Type"
+        ng-model="createTask.type"
+        required
+      >
+        <option value="" disabled selected>Type</option>
+        <option value="bug">Bug</option>
+        <option value="story">Story</option>
+        <option value="task">Task</option>
+      </select>
+
+      <select
+        id="create-task-status"
+        name="status"
+        placeholder="Status"
+        ng-model="createTask.status"
+        required
+      >
+        <option value="" disabled selected>Status</option>
+        <option value="todo" class="tag todo-tag">To Do</option>
+        <option value="in-progress" class="tag in-progress-tag">
+          In-progress
+        </option>
+        <option value="testing" class="tag testing-tag">Testing</option>
+        <option value="completed" class="tag completed-tag">Completed</option>
+      </select>
+
+      <select
+        id="create-task-priority"
+        name="priority"
+        placeholder="Priority"
+        ng-model="createTask.priority"
+        required
+      >
+        <option value="" disabled selected>Priority</option>
+        <option value="low" class="tag low-tag">Low</option>
+        <option value="medium" class="tag medium-tag">Medium</option>
+        <option value="high" class="tag high-tag">High</option>
+      </select>
+
+      <button
+        type="submit"
+        id="create-task-btn"
+        ng-disabled="createTaskForm.$invalid"
+      >
+        Create
+      </button>
+    </form>
+  </div>
+
+  <div id="task-list-section">
+    <h4>Active tasks</h4>
+
+    <div id="tasks-list">
+      <div class="task-list-item" ng-repeat="task in activeProjectTasks">
+        <div class="task-item-left">
+          <p class="task-id">{{task.taskId}}</p>
+          <p class="task-title">{{task.title}}</p>
+        </div>
+        <div class="task-item-right">
+          <p class="task-assigned">
+            {{task.assignedTo ? task.assignedTo.name : "unassigned"}}
+          </p>
+          <p class="task-type tag type-tag">{{task.type}}</p>
+          <p class="task-priority tag {{task.priority}}-tag ">
+            {{task.priority}}
+          </p>
+          <p class="task-status tag {{task.status}}-tag">{{task.status}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

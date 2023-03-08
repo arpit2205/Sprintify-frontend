@@ -10,8 +10,11 @@
 
 :root {
   --primary-blue: #0052cc;
+  --primary-blue-alpha: rgba(0, 82, 204, 0.1);
   --secondary-blue: #172b4d;
   --primary-red: #ff5630;
+  --primary-yellow: #ffab00;
+  --primary-orange: #dd7a00;
   --primary-green: #36b37e;
   --primary-violet: #6554c0;
   --primary-teal: #00b8d9;
@@ -102,4 +105,46 @@ a {
 
 .icon-mr {
   margin-right: 8px;
+}
+
+.tag {
+  text-transform: uppercase;
+  padding: 4px 8px;
+  font-weight: bold;
+  font-size: 12px;
+  color: white;
+  width: fit-content;
+  border-radius: 4px;
+}
+
+.type-tag {
+  background-color: var(--primary-violet);
+}
+
+.todo-tag {
+  background-color: var(--secondary-blue);
+}
+
+.in-progress-tag {
+  background-color: var(--primary-blue);
+}
+
+.testing-tag {
+  background-color: var(--primary-yellow);
+}
+
+.completed-tag {
+  background-color: var(--primary-green);
+}
+
+.low-tag {
+  background-color: var(--primary-green);
+}
+
+.medium-tag {
+  background-color: var(--primary-yellow);
+}
+
+.high-tag {
+  background-color: var(--primary-red);
 }

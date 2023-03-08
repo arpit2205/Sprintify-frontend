@@ -13,6 +13,19 @@ angular.module("app").factory("projectService", [
           }
         );
       },
+
+      createProject: function (data) {
+        var jwtToken = localStorage.getItem("jwt-token");
+        return $http.post(
+          "http://localhost:5000/api/brand-user/projects/create-project",
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }
+        );
+      },
     };
   },
 ]);

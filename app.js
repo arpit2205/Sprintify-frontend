@@ -133,6 +133,7 @@ app.config([
     $stateProvider.state("user.backlog", {
       url: "/backlog",
       templateUrl: "views/user/backlog.html",
+      controller: "userBacklogController",
     });
 
     $stateProvider.state("user.sprints", {

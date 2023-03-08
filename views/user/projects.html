@@ -15,12 +15,86 @@
       <div id="projects-container">
         <div id="projects-header">
           <h2 id="projects-container-title">Active projects</h2>
-          <button id="create-project-btn" class="btn-blue-shadow">
+          <button
+            id="create-project-btn"
+            class="btn-blue-shadow"
+            ng-click="toggleAddProjectForm()"
+          >
             <i class="fa-regular fa-plus icon-mr"></i>Create project
           </button>
         </div>
 
-        <div></div>
+        <div id="add-project-form" ng-show="addProjectForm">
+          <h4 id="create-project-title">Create a new project</h4>
+          <div class="flex">
+            <input
+              type="text"
+              name="title"
+              placeholder="Project title"
+              ng-required="true"
+              ng-model="addProject.title"
+            />
+
+            <input
+              type="text"
+              name="description"
+              placeholder="Description"
+              ng-required="true"
+              ng-model="addProject.description"
+            />
+
+            <select
+              id="add-project-status-input"
+              name="status"
+              placeholder="Status"
+              ng-model="addProject.status"
+              required
+            >
+              <option value="" disabled selected>Status</option>
+              <option value="planning">Planning</option>
+              <option value="in-progress">In-progress</option>
+              <option value="completed">Completed</option>
+              <option value="closed">Closed</option>
+              <option value="abandoned">Abandoned</option>
+            </select>
+          </div>
+
+          <div class="flex">
+            <div id="add-members-input-component">
+              <input
+                id="add-members-input"
+                type="text"
+                name="members"
+                placeholder="Search members"
+                ng-model="addProject.membersSearch"
+                ng-change="addMembersChange()"
+              />
+
+              <div id="selected-members-list">
+                <p ng-repeat="user in selectedMembers">
+                  {{user.name}}<i
+                    class="fa-sharp fa-solid fa-xmark"
+                    id="cross-icon"
+                    ng-click="handleRemoveSelectedMember(user)"
+                  ></i>
+                </p>
+              </div>
+
+              <div id="members-list" ng-show="addProject.membersSearch">
+                <p
+                  ng-repeat="user in results"
+                  ng-click="handleSelectMember(user)"
+                >
+                  {{user.name}} ({{user.email}})
+                </p>
+              </div>
+            </div>
+
+            <button id="add-project-btn" ng-click="handleCreateProject()">
+              Create
+            </button>
+          </div>
+        </div>
 
         <div id="projects-list">
           <div
