@@ -2,6 +2,8 @@ var app = angular.module("app", [
   // "ngRoute",
   "ui.router",
   "angular-jwt",
+  "ng-file-model",
+  "ngFileUpload",
 ]);
 
 // run on first render and route change
@@ -39,35 +41,6 @@ app.run([
     });
   },
 ]);
-
-// ng-router
-// app.config([
-//   "$routeProvider",
-//   function ($routeProvider) {
-//     $routeProvider
-//       .when("/login", {
-//         templateUrl: "views/public/login.html",
-//         controller: "loginController",
-//       })
-//       .when("/super-admin/home", {
-//         templateUrl: "views/superadmin/home.html",
-//         controller: "superadminHomeController",
-//       })
-//       .when("/super-admin/reset-password", {
-//         templateUrl: "views/superadmin/reset-password.html",
-//         controller: "resetPasswordController",
-//       })
-//       .when("/brand-admin/home", {
-//         templateUrl: "views/admin/home.html",
-//         controller: "adminHomeController",
-//       })
-//       .when("/user/home", {
-//         templateUrl: "views/user/home.html",
-//         controller: "userHomeController",
-//       })
-//       .otherwise("/login");
-//   },
-// ]);
 
 app.config([
   "$stateProvider",
@@ -128,6 +101,7 @@ app.config([
     $stateProvider.state("user.dashboard", {
       url: "/dashboard",
       templateUrl: "views/user/dashboardContent.html",
+      controller: "userDashboardController",
     });
 
     $stateProvider.state("user.backlog", {
@@ -139,11 +113,18 @@ app.config([
     $stateProvider.state("user.sprints", {
       url: "/sprints",
       templateUrl: "views/user/sprints.html",
+      controller: "userSprintController",
     });
 
     $stateProvider.state("user.board", {
       url: "/board",
       templateUrl: "views/user/board.html",
+    });
+
+    $stateProvider.state("user.task", {
+      url: "/backlog/{taskId}",
+      templateUrl: "views/user/task.html",
+      controller: "userTaskController",
     });
 
     $urlRouterProvider.otherwise("/login");

@@ -17,6 +17,9 @@
     <!-- Angular JWT -->
     <script src="node_modules/angular-jwt/dist/angular-jwt.min.js"></script>
 
+    <script src="./node_modules/ng-file-model/ng-file-model.js"></script>
+    <script src="./node_modules/ng-file-upload/dist/ng-file-upload.js"></script>
+
     <!-- Angular global app module -->
     <script src="./app.js"></script>
 
@@ -28,6 +31,9 @@
     <script src="./controllers/user/homeController.js"></script>
     <script src="./controllers/user/projectsController.js"></script>
     <script src="./controllers/user/backlogController.js"></script>
+    <script src="./controllers/user/taskController.js"></script>
+    <script src="./controllers/user/sprintController.js"></script>
+    <script src="./controllers/user/dashboardController.js"></script>
 
     <!-- Services -->
     <script src="./services/public/loginService.js"></script>
@@ -37,6 +43,11 @@
     <script src="./services/user/projectService.js"></script>
     <script src="./services/user/userService.js"></script>
     <script src="./services/user/taskService.js"></script>
+    <script src="./services/user/sprintService.js"></script>
+    <script src="./services/user/fileUploadService.js"></script>
+    <script src="./services/util/utilService.js"></script>
+    <script src="./services/user/chartService.js"></script>
+    <script src="./services/user/statsService.js"></script>
 
     <!-- Global CSS -->
     <link rel="stylesheet" href="./styles/globalStyles.css" />
@@ -52,6 +63,12 @@
     <link rel="stylesheet" href="./styles/user/dashboardLayout.css" />
     <link rel="stylesheet" href="./styles/user/projects.css" />
     <link rel="stylesheet" href="./styles/user/backlog.css" />
+    <link rel="stylesheet" href="./styles/user/task.css" />
+    <link rel="stylesheet" href="./styles/user/sprint.css" />
+    <link rel="stylesheet" href="./styles/user/dashboardContent.css" />
+
+    <!-- Chart js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 
     <title>POSIST Sprints</title>
   </head>

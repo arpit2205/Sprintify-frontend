@@ -13,6 +13,18 @@ angular.module("app").factory("userService", [
           }
         );
       },
+
+      fetchUsersByRegex: function (pattern) {
+        var jwtToken = localStorage.getItem("jwt-token");
+        return $http.get(
+          `http://localhost:5000/api/brand-user/projects/users/${pattern}`,
+          {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }
+        );
+      },
     };
   },
 ]);

@@ -32,6 +32,19 @@
       </select>
 
       <select
+        id="create-task-priority"
+        name="priority"
+        placeholder="Priority"
+        ng-model="createTask.priority"
+        required
+      >
+        <option value="" disabled selected>Priority</option>
+        <option value="low" class="tag low-tag">Low</option>
+        <option value="medium" class="tag medium-tag">Medium</option>
+        <option value="high" class="tag high-tag">High</option>
+      </select>
+
+      <select
         id="create-task-status"
         name="status"
         placeholder="Status"
@@ -47,19 +60,6 @@
         <option value="completed" class="tag completed-tag">Completed</option>
       </select>
 
-      <select
-        id="create-task-priority"
-        name="priority"
-        placeholder="Priority"
-        ng-model="createTask.priority"
-        required
-      >
-        <option value="" disabled selected>Priority</option>
-        <option value="low" class="tag low-tag">Low</option>
-        <option value="medium" class="tag medium-tag">Medium</option>
-        <option value="high" class="tag high-tag">High</option>
-      </select>
-
       <button
         type="submit"
         id="create-task-btn"
@@ -71,17 +71,114 @@
   </div>
 
   <div id="task-list-section">
-    <h4>Active tasks</h4>
+    <div id="task-list-header">
+      <div>
+        <h4>Active tasks</h4>
+      </div>
+      <div id="task-filters-div">
+        <i class="fa-solid fa-magnifying-glass" id="search-icon"></i>
+        <input
+          id="filter-tasks-input"
+          type="text"
+          placeholder="Filter by task title/type/status/priority"
+          ng-model="filterTasksInput"
+        />
+
+        <select
+          placeholder="Sprint"
+          ng-model="filterTask.sprint"
+          id="filter-tasks-sprint-select"
+        >
+          <option value="" selected>Sprint</option>
+          <option ng-repeat="sprint in sprints" value="{{sprint.name}}">
+            {{sprint.name}}
+          </option>
+        </select>
+
+        <!--  -->
+        <select placeholder="Type" ng-model="filterTask.type">
+          <option value="" selected>Type</option>
+          <option value="bug">Bug</option>
+          <option value="story">Story</option>
+          <option value="task">Task</option>
+        </select>
+
+        <select placeholder="Priority" ng-model="filterTask.priority">
+          <option value="" selected>Priority</option>
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+
+        <select placeholder="Status" ng-model="filterTask.status">
+          <option value="" selected>Status</option>
+          <option value="todo">To Do</option>
+          <option value="in-progress">In-progress</option>
+          <option value="testing">Testing</option>
+          <option value="completed">Completed</option>
+        </select>
+
+        <!--  -->
+
+        <button id="reset-filter-btn" ng-click="handleResetFilters()">
+          Reset
+        </button>
+      </div>
+    </div>
+
+    <div id="add-to-sprint-section">
+      <select
+        placeholder="Sprint"
+        ng-model="moveToSprint.sprint"
+        id="move-to-sprint-input"
+      >
+        <option value="" selected>Sprint</option>
+        <option ng-repeat="sprint in sprints" value="{{sprint}}">
+          {{sprint.name}}
+        </option>
+        <!-- loop over sprints -->
+      </select>
+
+      <button id="move-to-sprint-btn" ng-click="handleMoveToSprint()">
+        Add to sprint
+      </button>
+
+      <button id="remove-from-sprint-btn" ng-click="handleRemoveFromSprint()">
+        Remove from sprint
+      </button>
+    </div>
+
+    <!-- Loader -->
+    <div class="loader-div" ng-hide="activeProjectTasks">
+      <div class="lds-ripple">
+        <div></div>
+        <div></div>
+      </div>
+    </div>
 
     <div id="tasks-list">
-      <div class="task-list-item" ng-repeat="task in activeProjectTasks">
+      <div
+        class="task-list-item"
+        ng-repeat="task in activeProjectTasks | filter:filterTasksInput | filter:filterTaskType | filter:filterTaskPriority | filter:filterTaskStatus | filter:filterTaskSprint"
+        ng-click="handleTaskRedirect(task)"
+      >
         <div class="task-item-left">
+          <input
+            type="checkbox"
+            class="task-checkbox-input"
+            ng-model="task.isChecked"
+            ng-change="handleCheckBoxChange(task)"
+          />
           <p class="task-id">{{task.taskId}}</p>
-          <p class="task-title">{{task.title}}</p>
+          <p class="task-title">{{task.title}} |</p>
+          <p class="task-assigned">
+            {{task.assignedTo ? 'assigned to '+ task.assignedTo.name :
+            "unassigned"}}
+          </p>
         </div>
         <div class="task-item-right">
-          <p class="task-assigned">
-            {{task.assignedTo ? task.assignedTo.name : "unassigned"}}
+          <p ng-show="task.sprint" class="sprint-tag tag">
+            {{task.sprint.name}} SPRINT
           </p>
           <p class="task-type tag type-tag">{{task.type}}</p>
           <p class="task-priority tag {{task.priority}}-tag ">

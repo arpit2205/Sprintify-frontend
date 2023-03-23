@@ -1,1 +1,66 @@
-{{activeProject}}
+<div id="dashboard">
+  <div id="dashboard-wrapper">
+    <div id="project-details-section">
+      <div id="project-title-flex">
+        <h2 id="project-title">{{activeProject.title}}</h2>
+        <p id="project-status-tag">{{activeProject.status}}</p>
+      </div>
+      <p>{{activeProject.description}}</p>
+      <p id="project-owner">Led by {{activeProject.owner.name}}</p>
+    </div>
+
+    <div id="stats-container">
+      <div id="sprints-stats-section">
+        <div class="sprints-stat">
+          <p>Active sprints</p>
+          <h4>36</h4>
+        </div>
+
+        <div class="sprints-stat">
+          <p>Upcoming sprints</p>
+          <h4>12</h4>
+        </div>
+
+        <div class="sprints-stat">
+          <p>Ongoing sprints</p>
+          <h4>20</h4>
+        </div>
+
+        <div class="sprints-stat">
+          <p>Overdue sprints</p>
+          <h4>4</h4>
+        </div>
+      </div>
+
+      <!-- Loader -->
+      <div class="loader-div" ng-show="statsLoading">
+        <div class="lds-ripple">
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+
+      <div id="stats-first-row">
+        <div id="weekly-task-stats-graph-div">
+          <h4 ng-hide="statsLoading">Weekly task digest</h4>
+          <canvas id="weekly-task-stats-graph"></canvas>
+        </div>
+        <div id="overall-task-graph-div">
+          <h4 ng-hide="statsLoading" id="overall-completion-title">
+            Overall project completion
+          </h4>
+          <canvas id="overall-task-graph"></canvas>
+        </div>
+      </div>
+
+      <div id="stats-second-row">
+        <div id="task-percent-stats-div">
+          <h4 ng-hide="statsLoading" id="task-status-percent-title">
+            Task status percent
+          </h4>
+          <canvas id="task-status-percent-graph"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

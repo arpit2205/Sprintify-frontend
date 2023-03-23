@@ -8,6 +8,8 @@ app.run([
       if ($location.path() === "/user/projects") {
         // reset tasks
         $rootScope.activeProjectTasks = null;
+        $rootScope.task = null;
+        $rootScope.selectedSprint = null;
 
         // fetch projects
         projectService
@@ -19,14 +21,15 @@ app.run([
             console.log(error);
           });
 
-        userService
-          .fetchUsers()
-          .then(function (data) {
-            $rootScope.users = data.data.data;
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        // userService
+        //   .fetchUsers()
+        //   .then(function (data) {
+        //     $rootScope.users = data.data.data;
+        //     localStorage.setItem("users", JSON.stringify(data.data.data));
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
       }
     });
   },
@@ -38,9 +41,18 @@ app.controller("userProjectsController", [
   "$location",
   "loginService",
   "projectService",
-  function ($scope, $rootScope, $location, loginService, projectService) {
+  "userService",
+  "utilService",
+  function (
+    $scope,
+    $rootScope,
+    $location,
+    loginService,
+    projectService,
+    userService,
+    utilService
+  ) {
     $scope.addProjectForm = false;
-    $scope.localUsers = $rootScope.users;
     $scope.selectedMembers = [];
 
     $scope.handleLogout = function () {
@@ -48,30 +60,31 @@ app.controller("userProjectsController", [
     };
 
     $scope.addMembersChange = function () {
-      $scope.localUsers = $rootScope.users;
-      var users = $scope.localUsers;
-      var results = [];
+      if (!$scope.addProject.membersSearch) return;
 
-      for (var i = 0; i < users.length; i++) {
-        if (
-          users[i].name.toLowerCase().match($scope.addProject.membersSearch)
-        ) {
-          results.push(users[i]);
-        }
-      }
-
-      $scope.results = results;
+      userService
+        .fetchUsersByRegex($scope.addProject.membersSearch)
+        .then(function (data) {
+          $scope.results = data.data.data;
+          console.log(data.data.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     };
 
     $scope.handleSelectMember = function (user) {
-      var index = $scope.selectedMembers.indexOf(user);
-      if (index === -1) {
-        $scope.selectedMembers.push(user);
-      } else {
-        $scope.selectedMembers.splice(index, 1);
+      var found = false;
+      for (var i = 0; i < $scope.selectedMembers.length; i++) {
+        if (user.email === $scope.selectedMembers[i].email) {
+          found = true;
+          break;
+        }
       }
 
-      console.log($scope.selectedMembers);
+      if (!found) {
+        $scope.selectedMembers.push(user);
+      }
     };
 
     $scope.handleRemoveSelectedMember = function (user) {
@@ -79,8 +92,6 @@ app.controller("userProjectsController", [
       if (index !== -1) {
         $scope.selectedMembers.splice(index, 1);
       }
-
-      console.log($scope.selectedMembers);
     };
 
     // submit form
@@ -114,7 +125,6 @@ app.controller("userProjectsController", [
 
     $scope.toggleAddProjectForm = function () {
       $scope.addProjectForm = !$scope.addProjectForm;
-      console.log("add");
     };
 
     $scope.handleSelectProject = function (project) {

@@ -1,0 +1,233 @@
+<div id="task-container">
+  <p id="task-backlog-title" ui-sref="user.backlog">
+    <i class="fa-solid fa-chevron-left"></i> Project backlog
+  </p>
+
+  <!-- Loader -->
+  <div class="loader-div" ng-hide="task">
+    <div class="lds-ripple">
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+
+  <div id="task-wrapper" ng-show="task">
+    <!--  -->
+    <div id="task-info-section">
+      <div id="task-info-header">
+        <div id="task-title-info">
+          <div id="task-tags">
+            <p class="tag sprint-tag" ng-show="task.sprint">
+              {{task.sprint.name}} SPRINT
+            </p>
+            <p class="task-type tag type-tag">{{task.type}}</p>
+            <p class="task-priority tag {{task.priority}}-tag ">
+              {{task.priority}}
+            </p>
+            <p class="task-status tag {{task.status}}-tag">{{task.status}}</p>
+          </div>
+          <h4 id="task-title">
+            <span id="task-id-span">{{task.taskId}}</span>{{task.title}}
+          </h4>
+          <p id="task-created-by">
+            Created by {{task.owner.name}} at {{task.createdAt}}
+          </p>
+
+          <div id="task-assigned-div">
+            <p id="task-assigned-to">
+              {{task.assignedTo ? 'Assigned to ' + task.assignedTo.name :
+              'Unassigned'}}
+            </p>
+            <p
+              id="pick-task-btn"
+              ng-hide="task.assignedTo"
+              ng-click="handlePickTask()"
+            >
+              Pick this task
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div id="task-desc-section">
+        <p id="task-description-title">TASK DESCRIPTION</p>
+        <p id="task-description">
+          {{task.description ? task.description : 'No description added yet'}}
+        </p>
+
+        <div id="attachments-list" ng-show="task.attachments.length > 0">
+          <div
+            class="attachment-wrapper"
+            ng-repeat="image in task.attachments"
+            ng-click="handleDeleteAttachment(image)"
+          >
+            <button class="attachment-delete-btn">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+            <img class="attachment-img" src="{{image.location}}" alt="" />
+          </div>
+        </div>
+
+        <div id="attachment-section">
+          <input
+            name="image"
+            type="file"
+            id="file-input"
+            file-model="myFile"
+            accept="image/*"
+          />
+          <button id="upload-attachment-btn" ng-click="handleFileUpload()">
+            <i class="fa-solid fa-paperclip" id="upload-icon"></i>Upload
+            attachment
+          </button>
+        </div>
+      </div>
+
+      <!--  -->
+      <!-- Discussions were previously here -->
+      <!--  -->
+    </div>
+
+    <hr />
+    <!--  -->
+    <div id="task-edit-section">
+      <div id="task-edit-first-row">
+        <select
+          id="edit-task-type"
+          name="type"
+          placeholder="Type"
+          ng-model="editTask.type"
+        >
+          <option value="" disabled selected>Type</option>
+          <option value="bug">Bug</option>
+          <option value="story">Story</option>
+          <option value="task">Task</option>
+        </select>
+
+        <select
+          id="edit-task-priority"
+          name="priority"
+          placeholder="Priority"
+          ng-model="editTask.priority"
+        >
+          <option value="" disabled selected>Priority</option>
+          <option value="low" class="tag low-tag">Low</option>
+          <option value="medium" class="tag medium-tag">Medium</option>
+          <option value="high" class="tag high-tag">High</option>
+        </select>
+
+        <select
+          id="edit-task-status"
+          name="status"
+          placeholder="Status"
+          ng-model="editTask.status"
+        >
+          <option value="" disabled selected>Status</option>
+          <option value="todo" class="tag todo-tag">To Do</option>
+          <option value="in-progress" class="tag in-progress-tag">
+            In-progress
+          </option>
+          <option value="testing" class="tag testing-tag">Testing</option>
+          <option value="completed" class="tag completed-tag">Completed</option>
+        </select>
+
+        <select
+          id="edit-task-assign-to"
+          name="assignTo"
+          placeholder="Assign to"
+          ng-model="editTask.assignedTo"
+        >
+          <option value="" disabled selected>Assign to</option>
+          <option value="unassign">Unassign</option>
+          <option ng-repeat="user in projectUsers" value="{{user}}">
+            {{user.name}}
+          </option>
+        </select>
+      </div>
+      <div id="task-edit-second-row">
+        <p id="edit-task-description-label">Task description</p>
+        <textarea
+          rows="10"
+          name="edit-task-description"
+          id="edit-task-description"
+          placeholder="Add task description"
+          ng-model="editTask.description"
+        ></textarea>
+
+        <div id="edit-task-actions-section">
+          <button id="edit-task-delete-btn" ng-click="handleDeleteTask()">
+            Delete Task
+          </button>
+
+          <button id="edit-task-save-btn" ng-click="handleEditTaskSave()">
+            Update Task
+          </button>
+        </div>
+      </div>
+
+      <!--  -->
+      <div id="task-comments-section">
+        <p id="task-comments-title">DISCUSSION</p>
+        <div id="comment-form">
+          <input
+            id="add-comment-input"
+            type="text"
+            placeholder="Add a comment here"
+            ng-model="commentText"
+          />
+          <button id="add-comment-btn" ng-click="handleAddComment()">
+            <i class="fa-regular fa-plus icon-mr"></i> ADD
+          </button>
+        </div>
+
+        <!-- Loader -->
+        <div class="loader-div" ng-hide="comments">
+          <div class="lds-ripple">
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+
+        <div id="comments-list">
+          <div class="comment-item" ng-repeat="comment in comments">
+            <div class="comment-info">
+              <p class="comment-user">{{comment.user.name}}</p>
+              <p class="comment-time">{{comment.createdAt}}</p>
+              <button
+                class="comment-delete-btn"
+                ng-show="authUser._id === comment.user.userId"
+                ng-click="handleDeleteComment(comment)"
+              >
+                Delete
+              </button>
+            </div>
+            <p class="comment-text">{{comment.text}}</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="task-logs-section">
+        <p id="task-logs-title">Recent Activity</p>
+        <p id="no-activity-yet" ng-hide="taskLogs.length > 0">
+          No activity yet
+        </p>
+        <!-- Loader -->
+        <div class="loader-div" ng-hide="taskLogs">
+          <div class="lds-ripple">
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+        <div class="task-logs-wrapper">
+          <div class="task-log-item" ng-repeat="log in taskLogs">
+            <!-- <p class="task-log-createdAt">[{{log.createdAt}}]</p> -->
+            <p class="task-log-text">
+              {{log.logString}}
+              <span class="task-log-createdAt">[{{log.createdAt}}]</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

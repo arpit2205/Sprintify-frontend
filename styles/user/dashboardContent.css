@@ -1,0 +1,101 @@
+#dashboard {
+  width: 100%;
+}
+
+#dashboard-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#project-details-section {
+  width: 100%;
+}
+
+#project-title-flex {
+  display: flex;
+  align-items: center;
+}
+
+#project-status-tag {
+  margin-left: 8px;
+  margin-top: 8px;
+  text-transform: uppercase;
+  padding: 4px;
+  background-color: var(--primary-blue);
+  color: white;
+  font-weight: bold;
+  border-radius: 2px;
+  width: fit-content;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+#project-owner {
+  margin-top: 16px;
+  color: var(--black-100);
+}
+
+#stats-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 32px;
+}
+
+#sprints-stats-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.sprints-stat {
+  border-radius: 4px;
+  border: 1px solid #eeeeee;
+  padding: 16px;
+  width: 25%;
+  margin-right: 4px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sprints-stat h4 {
+  color: var(--primary-violet);
+}
+
+#stats-first-row {
+  display: flex;
+  width: 100%;
+  margin-top: 32px;
+}
+
+#weekly-task-stats-graph-div {
+  width: 70%;
+}
+
+#overall-task-graph-div {
+  /* margin-top: 60px; */
+  width: 50%;
+}
+
+#stats-first-row h4 {
+  margin-bottom: 32px;
+}
+
+#overall-completion-title {
+  padding-bottom: 32px;
+}
+
+#stats-second-row {
+  display: flex;
+  width: 100%;
+  margin-top: 40px;
+}
+
+#task-percent-stats-div {
+  width: 40%;
+}
+
+#task-status-percent-title {
+  margin-bottom: 32px;
+}

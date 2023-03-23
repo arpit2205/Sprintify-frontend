@@ -32,7 +32,12 @@
 
 #nav-left a {
   margin-left: 24px;
+  font-size: 13px;
   font-weight: bold;
+  background-color: var(--primary-blue-alpha);
+  padding: 12px 20px;
+  border-radius: 6px;
+  transition: all 0.1s;
 }
 
 #nav-right button {

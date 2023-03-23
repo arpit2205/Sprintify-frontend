@@ -1,1 +1,113 @@
-sprints
+<div id="sprints-container">
+  <h2 id="sprints-title">Sprints</h2>
+
+  <div id="create-sprint-section">
+    <h4 id="create-sprint-title">Create a new sprint</h4>
+    <form
+      id="create-sprint-form"
+      novalidate
+      name="createSprintForm"
+      ng-submit="handleCreateSprint()"
+    >
+      <input
+        type="text"
+        name="title"
+        placeholder="Sprint name"
+        ng-required="true"
+        ng-model="createSprint.name"
+        id="create-sprint-name-input"
+      />
+      <input
+        type="number"
+        name="duration"
+        placeholder="Duration (Days)"
+        ng-required="true"
+        ng-model="createSprint.duration"
+        id="create-sprint-duration-input"
+      />
+      <input
+        type="text"
+        name="description"
+        placeholder="Description"
+        ng-required="true"
+        ng-model="createSprint.description"
+        id="create-sprint-description-input"
+      />
+
+      <button
+        type="submit"
+        id="create-sprint-btn"
+        ng-disabled="createSprintForm.$invalid"
+      >
+        Create
+      </button>
+    </form>
+  </div>
+
+  <div id="active-sprints-section">
+    <h4>Active sprints</h4>
+
+    <!-- Loader -->
+    <div class="loader-div" ng-hide="sprints">
+      <div class="lds-ripple">
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+
+    <div id="active-sprints-list">
+      <div class="active-sprint-item" ng-repeat="sprint in sprints">
+        <div class="sprint-left">
+          <p class="sprint-name">
+            {{sprint.name}}
+            <span class="sprint-duration" ng-hide="sprint.isStarted">
+              | {{sprint.duration}} days
+            </span>
+
+            <span class="sprint-duration" ng-show="sprint.isStarted">
+              | {{sprint.daysLeft}}
+            </span>
+          </p>
+          <p class="sprint-description">{{sprint.description}}</p>
+          <p class="sprint-created-by">
+            Created by {{sprint.owner.name}} at {{sprint.createdAt}}
+          </p>
+        </div>
+
+        <div class="sprint-status-section" ng-show="sprint.isStarted">
+          <label for="sprint-progress" ng-show="sprint.percentCompleted >= 0"
+            >{{sprint.percentCompleted}}% tasks done</label
+          >
+          <progress
+            class="sprint-progress"
+            max="100"
+            value="{{sprint.percentCompleted}}"
+            ng-show="sprint.percentCompleted >=0"
+          >
+            {{sprint.percentCompleted}}% tasks done
+          </progress>
+        </div>
+        <div class="sprint-right">
+          <p class="sprint-status" ng-show="sprint.isStarted">
+            Started on {{sprint.startedAt}}
+          </p>
+
+          <button
+            class="view-sprint-tasks-btn"
+            ng-click="handleSprintSelect(sprint)"
+          >
+            View tasks
+          </button>
+
+          <button
+            class="start-sprint-btn"
+            ng-hide="sprint.isStarted"
+            ng-click="handleStartSprint(sprint)"
+          >
+            Start sprint
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

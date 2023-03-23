@@ -45,10 +45,52 @@ select {
 }
 
 #task-list-section {
-  margin-top: 32px;
+  margin-top: 36px;
   width: 100%;
   display: flex;
   flex-direction: column;
+}
+
+#task-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+#filter-tasks-input {
+  padding: 8px 12px;
+  font-size: 14px;
+  width: 320px;
+  margin-right: 8px;
+}
+
+#filter-tasks-sprint-select {
+  border: 2px solid var(--primary-violet);
+  background-color: var(--primary-violet-alpha);
+  color: var(--primary-violet);
+}
+
+#search-icon {
+  color: var(--black-100);
+  margin-right: 10px;
+}
+
+#task-filters-div {
+  display: flex;
+  align-items: center;
+}
+
+#task-filters-div select {
+  width: 100px;
+}
+
+#reset-filter-btn {
+  background-color: var(--primary-blue-alpha);
+  color: var(--primary-blue);
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 10px 12px;
 }
 
 #tasks-list {
@@ -93,5 +135,44 @@ select {
 }
 
 .task-assigned {
-  color: var(--black-200);
+  color: var(--black-100);
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.task-checkbox-input {
+  width: fit-content;
+  z-index: 99;
+  margin-right: 4px;
+}
+
+#add-to-sprint-section {
+  display: flex;
+  margin-top: 24px;
+}
+
+#move-to-sprint-input {
+  width: 200px;
+  font-size: 14px;
+  padding: 8px 12px;
+}
+
+#move-to-sprint-btn {
+  background-color: var(--primary-violet);
+  color: white;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 10px 12px;
+}
+
+#remove-from-sprint-btn {
+  background-color: white;
+  color: var(--primary-violet);
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 10px 12px;
+  margin-left: 8px;
 }

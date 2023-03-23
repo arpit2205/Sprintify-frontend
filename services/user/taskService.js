@@ -28,6 +28,105 @@ angular.module("app").factory("taskService", [
         );
       },
 
+      fetchSingleTask: function (taskId) {
+        var jwtToken = localStorage.getItem("jwt-token");
+        return $http.get(
+          `http://localhost:5000/api/brand-user/tasks/${taskId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }
+        );
+      },
+
+      updateTaskDetails: function (taskId, data) {
+        var jwtToken = localStorage.getItem("jwt-token");
+        return $http.patch(
+          `http://localhost:5000/api/brand-user/tasks/edit/${taskId}`,
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }
+        );
+      },
+
+      deleteTask: function (taskId) {
+        var jwtToken = localStorage.getItem("jwt-token");
+        return $http.delete(
+          `http://localhost:5000/api/brand-user/tasks/delete/${taskId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }
+        );
+      },
+
+      pickTask: function (taskId) {
+        var jwtToken = localStorage.getItem("jwt-token");
+        return $http.patch(
+          `http://localhost:5000/api/brand-user/tasks/pick-task/${taskId}`,
+          null,
+          {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }
+        );
+      },
+
+      createComment: function (data) {
+        var jwtToken = localStorage.getItem("jwt-token");
+        return $http.post(
+          `http://localhost:5000/api/brand-user/tasks/comments/add-comment`,
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }
+        );
+      },
+
+      fetchComments: function (taskId) {
+        var jwtToken = localStorage.getItem("jwt-token");
+        return $http.get(
+          `http://localhost:5000/api/brand-user/tasks/comments/${taskId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }
+        );
+      },
+
+      deleteComment: function (commentId) {
+        var jwtToken = localStorage.getItem("jwt-token");
+        return $http.delete(
+          `http://localhost:5000/api/brand-user/tasks/comments/${commentId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }
+        );
+      },
+
+      fetchLogs: function (taskId) {
+        var jwtToken = localStorage.getItem("jwt-token");
+        return $http.get(
+          `http://localhost:5000/api/brand-user/tasks/logs/${taskId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }
+        );
+      },
+
       uniqueId: function () {
         var result = "";
         var characters =
