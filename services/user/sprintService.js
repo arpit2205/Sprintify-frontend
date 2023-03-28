@@ -16,11 +16,11 @@ angular.module("app").factory("sprintService", [
         );
       },
 
-      fetchSprints: function () {
+      fetchSprints: function (filter) {
         var jwtToken = localStorage.getItem("jwt-token");
         var project = $rootScope.activeProject;
         return $http.get(
-          `http://localhost:5000/api/brand-user/sprints/project/${project._id}`,
+          `http://localhost:5000/api/brand-user/sprints/project/${project._id}?filter=${filter}`,
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,
@@ -61,6 +61,19 @@ angular.module("app").factory("sprintService", [
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.patch(
           `http://localhost:5000/api/brand-user/sprints/start/${sprintId}`,
+          null,
+          {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }
+        );
+      },
+
+      finishSprint: function (sprintId) {
+        var jwtToken = localStorage.getItem("jwt-token");
+        return $http.patch(
+          `http://localhost:5000/api/brand-user/sprints/finish/${sprintId}`,
           null,
           {
             headers: {

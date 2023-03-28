@@ -23,9 +23,18 @@ app.run([
 
         // fetch project tasks
         taskService
-          .fetchTasks()
+          .fetchTasks(1, 10)
           .then(function (data) {
             $rootScope.activeProjectTasks = data.data.data;
+            console.log(data.data.data);
+            var totalDocuments = data.data.totalDocuments;
+            $rootScope.paginationCount = Math.ceil(totalDocuments / 10);
+            $rootScope.paginationArray = [];
+            for (var i = 1; i <= $rootScope.paginationCount; i++) {
+              $rootScope.paginationArray.push(i);
+            }
+
+            $rootScope.selectedPage = 1;
           })
           .catch(function (error) {
             console.log(error);
@@ -34,7 +43,7 @@ app.run([
         // fetch project sprints
 
         sprintService
-          .fetchSprints()
+          .fetchSprints("active")
           .then(function (data) {
             $rootScope.sprints = data.data.data;
           })
@@ -69,8 +78,22 @@ app.controller("userBacklogController", [
       taskService
         .createTask(data)
         .then(function (data) {
-          console.log(data.data.data);
-          $rootScope.activeProjectTasks.push(data.data.data);
+          taskService
+            .fetchTasks(1, 10, $scope.filterTask)
+            .then(function (data) {
+              console.log(data.data.data);
+              $rootScope.activeProjectTasks = data.data.data;
+              var totalDocuments = data.data.totalDocuments;
+              $rootScope.paginationCount = Math.ceil(totalDocuments / 10);
+              $rootScope.paginationArray = [];
+              for (var i = 1; i <= $rootScope.paginationCount; i++) {
+                $rootScope.paginationArray.push(i);
+              }
+              $rootScope.selectedPage = 1;
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
         })
         .catch(function (error) {
           console.log(error);
@@ -79,7 +102,6 @@ app.controller("userBacklogController", [
 
     $scope.handleTaskRedirect = function (task) {
       if (window.event.srcElement.localName === "input") {
-        // console.log("check");
         return;
       }
 
@@ -87,42 +109,16 @@ app.controller("userBacklogController", [
       $rootScope.task = task;
     };
 
-    // Filters
+    // Filters start ///////////////////////////////
 
     $scope.filterTask = {
       type: "",
       priority: "",
       status: "",
-    };
-
-    $scope.filterTaskType = function (task) {
-      return (
-        $scope.filterTask.type === "" || task.type === $scope.filterTask.type
-      );
-    };
-
-    $scope.filterTaskPriority = function (task) {
-      return (
-        $scope.filterTask.priority === "" ||
-        task.priority === $scope.filterTask.priority
-      );
-    };
-
-    $scope.filterTaskStatus = function (task) {
-      return (
-        $scope.filterTask.status === "" ||
-        task.status === $scope.filterTask.status
-      );
+      text: "",
     };
 
     $scope.filterTask.sprint = $rootScope.selectedSprint || "";
-
-    $scope.filterTaskSprint = function (task) {
-      return (
-        $scope.filterTask.sprint === "" ||
-        task.sprint?.name === $scope.filterTask.sprint
-      );
-    };
 
     $scope.handleResetFilters = function () {
       $scope.filterTask = {
@@ -130,10 +126,68 @@ app.controller("userBacklogController", [
         priority: "",
         status: "",
         sprint: "",
+        text: "",
       };
 
-      $scope.filterTasksInput = "";
+      $rootScope.selectedSprint = "";
+
+      taskService
+        .fetchTasks(1, 10, $scope.filterTask)
+        .then(function (data) {
+          console.log(data.data.data);
+          $rootScope.activeProjectTasks = data.data.data;
+          var totalDocuments = data.data.totalDocuments;
+          $rootScope.paginationCount = Math.ceil(totalDocuments / 10);
+          $rootScope.paginationArray = [];
+          for (var i = 1; i <= $rootScope.paginationCount; i++) {
+            $rootScope.paginationArray.push(i);
+          }
+          $rootScope.selectedPage = 1;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     };
+
+    $scope.handleApplyFilters = function () {
+      console.log($scope.filterTask);
+      taskService
+        .fetchTasks(1, 10, $scope.filterTask)
+        .then(function (data) {
+          console.log(data.data.data);
+          $rootScope.activeProjectTasks = data.data.data;
+          var totalDocuments = data.data.totalDocuments;
+          $rootScope.paginationCount = Math.ceil(totalDocuments / 10);
+          $rootScope.paginationArray = [];
+          for (var i = 1; i <= $rootScope.paginationCount; i++) {
+            $rootScope.paginationArray.push(i);
+          }
+          $rootScope.selectedPage = 1;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+
+    $scope.handleTextSearchTask = function () {
+      taskService
+        .fetchTasks(1, 10, $scope.filterTask)
+        .then(function (data) {
+          $rootScope.activeProjectTasks = data.data.data;
+          var totalDocuments = data.data.totalDocuments;
+          $rootScope.paginationCount = Math.ceil(totalDocuments / 10);
+          $rootScope.paginationArray = [];
+          for (var i = 1; i <= $rootScope.paginationCount; i++) {
+            $rootScope.paginationArray.push(i);
+          }
+          $rootScope.selectedPage = 1;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+
+    // filters over ////////////////////////////
 
     // add to sprints
     $scope.selectedTasksForSprint = [];
@@ -218,6 +272,25 @@ app.controller("userBacklogController", [
               $rootScope.activeProjectTasks[i].sprint = null;
             }
           }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+
+    // pagination
+    $scope.handlePageChange = function (page) {
+      taskService
+        .fetchTasks(page, 10, $scope.filterTask)
+        .then(function (data) {
+          $rootScope.activeProjectTasks = data.data.data;
+          var totalDocuments = data.data.totalDocuments;
+          $rootScope.paginationCount = Math.ceil(totalDocuments / 10);
+          $rootScope.paginationArray = [];
+          for (var i = 1; i <= $rootScope.paginationCount; i++) {
+            $rootScope.paginationArray.push(i);
+          }
+          $rootScope.selectedPage = page;
         })
         .catch(function (error) {
           console.log(error);

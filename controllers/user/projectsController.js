@@ -10,6 +10,8 @@ app.run([
         $rootScope.activeProjectTasks = null;
         $rootScope.task = null;
         $rootScope.selectedSprint = null;
+        $rootScope.paginationCount = null;
+        $rootScope.paginationArray = null;
 
         // fetch projects
         projectService

@@ -64,9 +64,7 @@
 
 .active-sprint-item {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   padding: 24px;
   border-radius: 12px;
   margin-bottom: 16px;
@@ -81,6 +79,11 @@
 
   /* cursor: pointer; */
 }
+.sprint-flex {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
 
 .sprint-name {
   font-weight: bold;
@@ -89,7 +92,7 @@
 }
 
 .sprint-description {
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 
 .sprint-created-by {
@@ -116,6 +119,15 @@
   padding: 12px 24px;
 }
 
+.complete-sprint-btn {
+  background-color: var(--primary-violet-alpha);
+  color: var(--primary-violet);
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 12px 24px;
+}
+
 .sprint-left {
 }
 
@@ -124,9 +136,9 @@
   align-items: center;
 }
 .sprint-status {
-  margin-right: 16px;
-  font-weight: 500;
+  margin-top: 4px;
   color: var(--black-200);
+  font-size: 12px;
 }
 
 .sprint-duration {
@@ -143,4 +155,32 @@
 .sprint-status-section label {
   margin-bottom: 4px;
   color: var(--primary-violet);
+}
+
+#completed-sprints-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 24px;
+}
+
+#completed-sprints-table-div {
+  width: 100%;
+  margin-top: 16px;
+}
+
+#completed-sprints-table {
+  width: 100%;
+  text-align: left;
+  border-radius: 4px;
+  border: 1px solid #eeeeee;
+  padding: 16px;
+}
+
+#completed-sprints-table td {
+  width: 100px;
+}
+
+#completed-sprints-table th {
+  padding-bottom: 8px;
 }

@@ -56,58 +56,123 @@
     </div>
 
     <div id="active-sprints-list">
-      <div class="active-sprint-item" ng-repeat="sprint in sprints">
-        <div class="sprint-left">
-          <p class="sprint-name">
-            {{sprint.name}}
-            <span class="sprint-duration" ng-hide="sprint.isStarted">
-              | {{sprint.duration}} days
-            </span>
+      <div
+        class="active-sprint-item"
+        ng-repeat="sprint in sprints"
+        ng-if="!sprint.isCompleted"
+      >
+        <div class="sprint-flex">
+          <div class="sprint-left">
+            <p class="sprint-name">
+              {{sprint.name}}
+              <span
+                class="sprint-duration"
+                ng-show="!sprint.isStarted || sprint.isCompleted"
+              >
+                | {{sprint.duration}} days
+              </span>
 
-            <span class="sprint-duration" ng-show="sprint.isStarted">
-              | {{sprint.daysLeft}}
-            </span>
-          </p>
-          <p class="sprint-description">{{sprint.description}}</p>
-          <p class="sprint-created-by">
+              <span
+                class="sprint-duration"
+                ng-show="sprint.isStarted && !sprint.isCompleted"
+              >
+                | {{sprint.daysLeft}}
+              </span>
+            </p>
+            <p class="sprint-description">{{sprint.description}}</p>
+            <!-- <p class="sprint-created-by sprint-status">
             Created by {{sprint.owner.name}} at {{sprint.createdAt}}
           </p>
-        </div>
-
-        <div class="sprint-status-section" ng-show="sprint.isStarted">
-          <label for="sprint-progress" ng-show="sprint.percentCompleted >= 0"
-            >{{sprint.percentCompleted}}% tasks done</label
-          >
-          <progress
-            class="sprint-progress"
-            max="100"
-            value="{{sprint.percentCompleted}}"
-            ng-show="sprint.percentCompleted >=0"
-          >
-            {{sprint.percentCompleted}}% tasks done
-          </progress>
-        </div>
-        <div class="sprint-right">
           <p class="sprint-status" ng-show="sprint.isStarted">
             Started on {{sprint.startedAt}}
           </p>
+          <p class="sprint-status" ng-show="sprint.isCompleted">
+            Marked completed on {{sprint.completedAt}}
+          </p> -->
+          </div>
 
-          <button
-            class="view-sprint-tasks-btn"
-            ng-click="handleSprintSelect(sprint)"
-          >
-            View tasks
-          </button>
+          <div class="sprint-status-section" ng-show="sprint.isStarted">
+            <label for="sprint-progress" ng-show="sprint.percentCompleted >= 0"
+              >{{sprint.percentCompleted}}% tasks done</label
+            >
+            <progress
+              class="sprint-progress"
+              max="100"
+              value="{{sprint.percentCompleted}}"
+              ng-show="sprint.percentCompleted >=0"
+            >
+              {{sprint.percentCompleted}}% tasks done
+            </progress>
+          </div>
+          <div class="sprint-right">
+            <button
+              class="view-sprint-tasks-btn"
+              ng-click="handleSprintSelect(sprint)"
+            >
+              View sprint backlog
+            </button>
 
-          <button
-            class="start-sprint-btn"
-            ng-hide="sprint.isStarted"
-            ng-click="handleStartSprint(sprint)"
-          >
-            Start sprint
-          </button>
+            <button
+              class="start-sprint-btn"
+              ng-hide="sprint.isStarted"
+              ng-click="handleStartSprint(sprint)"
+            >
+              Start sprint
+            </button>
+
+            <button
+              class="complete-sprint-btn"
+              ng-show="sprint.isStarted && !sprint.isCompleted"
+              ng-click="handleCompleteSprint(sprint)"
+            >
+              Mark completed
+            </button>
+          </div>
         </div>
+        <p class="sprint-created-by sprint-status">
+          Created by {{sprint.owner.name}} at {{sprint.createdAt}}
+        </p>
+        <p class="sprint-status" ng-show="sprint.isStarted">
+          Started on {{sprint.startedAt}}
+        </p>
+        <p class="sprint-status" ng-show="sprint.isCompleted">
+          Marked completed on {{sprint.completedAt}}
+        </p>
       </div>
+    </div>
+  </div>
+
+  <!-- completed -->
+  <div id="completed-sprints-section">
+    <h4>Completed sprints</h4>
+
+    <div id="completed-sprints-table-div">
+      <table id="completed-sprints-table">
+        <tr>
+          <th>Name</th>
+          <th>Duration</th>
+          <th>Started at</th>
+          <th>Completed at</th>
+          <th>On time</th>
+          <th>Overdue by</th>
+        </tr>
+
+        <tr ng-repeat="sprint in sprints" ng-if="sprint.isCompleted">
+          <td>{{sprint.name}}</td>
+          <td>{{sprint.duration}}</td>
+          <td>{{sprint.startedAt.slice(0,10)}}</td>
+          <td>{{sprint.completedAt.slice(0,10)}}</td>
+          <td>
+            {{(sprint.completedAt.slice(8,10)) - (sprint.startedAt.slice(8,10))
+            <= sprint.duration ? 'ON TIME' : 'OVERDUE'}}
+          </td>
+          <td>
+            {{(sprint.completedAt.slice(8,10)) - (sprint.startedAt.slice(8,10))
+            < sprint.duration ? '0 Days' : (sprint.completedAt.slice(8,10)) -
+            (sprint.startedAt.slice(8,10)) - sprint.duration + ' Days'}}
+          </td>
+        </tr>
+      </table>
     </div>
   </div>
 </div>

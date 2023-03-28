@@ -1,5 +1,6 @@
 angular.module("app").factory("userChartService", [
-  function () {
+  "$rootScope",
+  function ($rootScope) {
     return {
       renderWeeklyTaskDigestChart: function (data) {
         const today = new Date();
@@ -28,6 +29,7 @@ angular.module("app").factory("userChartService", [
         for (var i = 0; i < dates.length; i++) {
           if (data.weeklyCreatedTasks[k]?._id === dates[i]) {
             created.push(data.weeklyCreatedTasks[k].created_count);
+
             k++;
           } else {
             created.push(0);
@@ -99,7 +101,6 @@ angular.module("app").factory("userChartService", [
       },
 
       renderTaskPercentByStatusChart: function (data) {
-        console.log(data);
         data = data[0];
 
         var ctx = document.getElementById("task-status-percent-graph");
@@ -117,6 +118,120 @@ angular.module("app").factory("userChartService", [
                 ],
                 backgroundColor: ["#172b4d", "#0052cc", "#ffab00", "#36b37e"],
                 borderColor: ["#172b4d", "#0052cc", "#ffab00", "#36b37e"],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {},
+        });
+      },
+
+      renderMostActiveUsersChart: function (data) {
+        var labels = [],
+          value = [];
+
+        for (var i = 0; i < data.length; i++) {
+          labels.push(data[i]._id);
+          value.push(data[i].count);
+        }
+
+        var ctx = document.getElementById("most-active-users-graph");
+        var myChart = new Chart(ctx, {
+          type: "horizontalBar",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                axis: "y",
+                label: "Activities",
+                data: value,
+                fill: false,
+                backgroundColor: [
+                  "#36b37e",
+                  "#0052cc",
+                  "#6554c0",
+                  "#172b4d",
+                  "#ffab00",
+                ],
+                borderColor: [
+                  "#36b37e",
+                  "#0052cc",
+                  "#6554c0",
+                  "#172b4d",
+                  "#ffab00",
+                ],
+                borderWidth: 1,
+                barThickness: 80,
+                borderRadius: 15,
+              },
+            ],
+          },
+          options: {
+            indexAxis: "y",
+            beginAtZero: true,
+
+            scales: {
+              xAxes: [
+                {
+                  display: true,
+                  ticks: {
+                    beginAtZero: true,
+                  },
+                  gridLines: {
+                    display: false,
+                  },
+                },
+              ],
+              yAxes: [
+                {
+                  gridLines: {
+                    display: false,
+                  },
+                },
+              ],
+            },
+          },
+        });
+      },
+
+      // sprints
+      renderSprintOverduePercentChart: function (data) {
+        var completedOverdueSprints = parseInt(
+          data.completedOverdueSprints[0]?.count || 0
+        );
+        var onTimeCompletedSprints = parseInt(
+          data.onTimeCompleted[0]?.count || 0
+        );
+
+        var onTimeCompletedPercent = parseInt(
+          (onTimeCompletedSprints /
+            (onTimeCompletedSprints + completedOverdueSprints)) *
+            100
+        );
+
+        $rootScope.sprintCompletionLikely =
+          onTimeCompletedPercent < 25
+            ? "very less"
+            : onTimeCompletedPercent < 50
+            ? "less"
+            : onTimeCompletedPercent < 75
+            ? "moderately"
+            : onTimeCompletedPercent < 90
+            ? "highly"
+            : "strongly";
+
+        var ctx = document.getElementById("sprint-percent-graph");
+        var myChart = new Chart(ctx, {
+          type: "doughnut",
+          data: {
+            labels: ["On-time", "Overdue"],
+            datasets: [
+              {
+                data: onTimeCompletedPercent
+                  ? [onTimeCompletedPercent, 100 - onTimeCompletedPercent]
+                  : [0, 0],
+                backgroundColor: ["#6554c0", "#ff5630"],
+                borderColor: ["#6554c0", "#ff5630"],
                 borderWidth: 1,
               },
             ],

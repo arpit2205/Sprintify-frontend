@@ -10,25 +10,25 @@
     </div>
 
     <div id="stats-container">
-      <div id="sprints-stats-section">
-        <div class="sprints-stat">
-          <p>Active sprints</p>
-          <h4>36</h4>
+      <div id="tasks-stats-section">
+        <div class="task-stat">
+          <p>Total tasks</p>
+          <h4>{{totalTasks}}</h4>
         </div>
 
-        <div class="sprints-stat">
-          <p>Upcoming sprints</p>
-          <h4>12</h4>
+        <div class="task-stat">
+          <p>Tasks to be done</p>
+          <h4>{{inProgressTasks}}</h4>
         </div>
 
-        <div class="sprints-stat">
-          <p>Ongoing sprints</p>
-          <h4>20</h4>
+        <div class="task-stat">
+          <p>Tasks completed</p>
+          <h4>{{completedTasks}}</h4>
         </div>
 
-        <div class="sprints-stat">
-          <p>Overdue sprints</p>
-          <h4>4</h4>
+        <div class="task-stat">
+          <p>Unassigned tasks</p>
+          <h4>{{unassignedTasks}}</h4>
         </div>
       </div>
 
@@ -56,9 +56,62 @@
       <div id="stats-second-row">
         <div id="task-percent-stats-div">
           <h4 ng-hide="statsLoading" id="task-status-percent-title">
-            Task status percent
+            Backlog - Item Status
           </h4>
           <canvas id="task-status-percent-graph"></canvas>
+        </div>
+        <div id="most-active-users-div">
+          <h4 ng-hide="statsLoading" id="most-active-users-title">
+            5 Most active users by activity
+          </h4>
+          <canvas id="most-active-users-graph"></canvas>
+        </div>
+      </div>
+
+      <div id="sprints-stats-section">
+        <div class="sprint-stat">
+          <p>Active sprints</p>
+          <h4>{{activeSprints}}</h4>
+        </div>
+
+        <div class="sprint-stat">
+          <p>Upcoming sprints</p>
+          <h4>{{upcomingSprints}}</h4>
+        </div>
+
+        <div class="sprint-stat">
+          <p>Completed sprints</p>
+          <h4>{{completedSprints}}</h4>
+        </div>
+
+        <div class="sprint-stat">
+          <p>Completed on time</p>
+          <h4>{{onTimeCompleted}}</h4>
+        </div>
+
+        <div class="sprint-stat">
+          <p>Overdue sprints</p>
+          <h4 style="color: var(--primary-red)">{{activeOverdueSprints}}</h4>
+        </div>
+      </div>
+
+      <div id="stats-third-row">
+        <div id="sprint-analysis-div">
+          <h4 id="sprint-prediction-title">Sprint prediction</h4>
+          <h1 ng-hide="statsLoading" id="sprint-analysis-text">
+            Based on previous data, it is
+            <span class="sprint-likely-percent">
+              {{sprintCompletionLikely}} likely</span
+            >
+            that your upcoming sprints will
+            <span class="sprint-green-text"> complete on time</span>.
+          </h1>
+        </div>
+        <div id="sprint-percent-div">
+          <h4 ng-hide="statsLoading" id="sprint-percent-title">
+            Overdue VS on-time-completed sprints
+          </h4>
+          <canvas id="sprint-percent-graph"></canvas>
         </div>
       </div>
     </div>

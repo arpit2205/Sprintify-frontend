@@ -43,13 +43,13 @@
   margin-top: 32px;
 }
 
-#sprints-stats-section {
+#tasks-stats-section {
   width: 100%;
   display: flex;
   justify-content: center;
 }
 
-.sprints-stat {
+.task-stat {
   border-radius: 4px;
   border: 1px solid #eeeeee;
   padding: 16px;
@@ -57,10 +57,11 @@
   margin-right: 4px;
   display: flex;
   justify-content: space-between;
+  transition: all 0.1s;
 }
 
-.sprints-stat h4 {
-  color: var(--primary-violet);
+.task-stat h4 {
+  color: var(--primary-blue);
 }
 
 #stats-first-row {
@@ -89,13 +90,88 @@
 #stats-second-row {
   display: flex;
   width: 100%;
-  margin-top: 40px;
+  margin-top: 80px;
 }
 
 #task-percent-stats-div {
-  width: 40%;
+  width: 50%;
 }
 
 #task-status-percent-title {
   margin-bottom: 32px;
+  padding-bottom: 32px;
+}
+
+#most-active-users-div {
+  width: 70%;
+}
+
+#most-active-users-title {
+  margin-bottom: 32px;
+}
+
+#sprints-stats-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 48px;
+}
+
+.sprint-stat {
+  border-radius: 4px;
+  border: 1px solid #eeeeee;
+  padding: 16px;
+  width: 25%;
+  margin-right: 4px;
+  display: flex;
+  justify-content: space-between;
+  transition: all 0.1s;
+}
+
+.sprint-stat:hover,
+.task-stat:hover {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.sprint-stat h4 {
+  color: var(--primary-violet);
+}
+
+#stats-third-row {
+  display: flex;
+  width: 100%;
+  margin-top: 32px;
+}
+
+#sprint-percent-div {
+  width: 50%;
+}
+
+#sprint-percent-title {
+  margin-bottom: 32px;
+}
+
+#sprint-analysis-div {
+  width: 50%;
+  border: 2px solid #eeeeee;
+  margin-right: 16px;
+  padding: 24px;
+  border-radius: 8px;
+}
+
+#sprint-analysis-text {
+  margin-top: 60px;
+  margin-bottom: 40px;
+  font-size: 36px;
+  color: var(--black-400);
+  line-height: 1.4;
+  /* width: 90%; */
+}
+
+.sprint-green-text {
+  color: var(--primary-violet);
+}
+
+.sprint-likely-percent {
+  color: var(--primary-green);
 }

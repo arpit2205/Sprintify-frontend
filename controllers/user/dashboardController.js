@@ -23,11 +23,18 @@ app.run([
 
         $rootScope.statsLoading = true;
 
-        // fetch stats
+        // fetch backlog stats
         userStatsService
           .fetchWeeklyTaskDigestData($rootScope.activeProject._id)
           .then(function (data) {
-            console.log(data.data.data);
+            $rootScope.totalTasks =
+              data.data.data.percentCompletedTasks[0].total;
+            $rootScope.completedTasks =
+              data.data.data.percentCompletedTasks[0].completed;
+            $rootScope.inProgressTasks =
+              $rootScope.totalTasks - $rootScope.completedTasks;
+            $rootScope.unassignedTasks =
+              data.data.data.unassignedTasksCount[0].count;
 
             $rootScope.statsLoading = false;
 
@@ -36,10 +43,36 @@ app.run([
             userChartService.renderTaskPercentByStatusChart(
               data.data.data.percentTasksByStatus
             );
+            userChartService.renderMostActiveUsersChart(
+              data.data.data.fiveMostActiveUsers
+            );
           })
           .catch(function (error) {
             console.log(error);
             $rootScope.statsLoading = false;
+          });
+
+        // fetch sprint stats
+        userStatsService
+          .fetchSprintStats($rootScope.activeProject._id)
+          .then(function (data) {
+            var data = data.data.data[0];
+
+            $rootScope.activeSprints = data.activeSprints[0]?.count || 0;
+
+            $rootScope.completedSprints = data.completedSprints[0]?.count || 0;
+
+            $rootScope.onTimeCompleted = data.onTimeCompleted[0]?.count || 0;
+
+            $rootScope.activeOverdueSprints =
+              data.activeOverdueSprints[0]?.count || 0;
+
+            $rootScope.upcomingSprints = data.upcomingSprints[0]?.count || 0;
+
+            userChartService.renderSprintOverduePercentChart(data);
+          })
+          .catch(function (error) {
+            console.log(error);
           });
       }
     });

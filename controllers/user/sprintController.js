@@ -117,7 +117,7 @@ app.controller("userSprintController", [
       sprintService
         .createSprint(data)
         .then(function (data) {
-          $rootScope.sprints.push(data.data.data);
+          $rootScope.sprints.unshift(data.data.data);
         })
         .catch(function (error) {
           console.log(error);
@@ -153,6 +153,20 @@ app.controller("userSprintController", [
 
           var index = $rootScope.sprints.indexOf(sprint);
 
+          $rootScope.sprints[index] = updatedSprint;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+
+    $scope.handleCompleteSprint = function (sprint) {
+      sprintService
+        .finishSprint(sprint._id)
+        .then(function (data) {
+          console.log(data.data.data);
+          var updatedSprint = data.data.data;
+          var index = $rootScope.sprints.indexOf(sprint);
           $rootScope.sprints[index] = updatedSprint;
         })
         .catch(function (error) {
