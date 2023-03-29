@@ -1,7 +1,8 @@
 angular.module("app").factory("taskService", [
   "$http",
   "$rootScope",
-  function ($http, $rootScope) {
+  "$q",
+  function ($http, $rootScope, $q) {
     return {
       fetchTasks: function (page, limit, filters) {
         var jwtToken = localStorage.getItem("jwt-token");
@@ -18,10 +19,6 @@ angular.module("app").factory("taskService", [
             },
           }
         );
-      },
-
-      test: function () {
-        return console.log("yoo");
       },
 
       createTask: function (data) {
@@ -41,6 +38,18 @@ angular.module("app").factory("taskService", [
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.get(
           `http://localhost:5000/api/brand-user/tasks/${taskId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }
+        );
+      },
+
+      fetchProjectMembers: function (projectId) {
+        var jwtToken = localStorage.getItem("jwt-token");
+        return $http.get(
+          `http://localhost:5000/api/brand-user/users/project-members/${projectId}`,
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,

@@ -61,7 +61,15 @@ app.controller("userBacklogController", [
   "$location",
   "taskService",
   "sprintService",
-  function ($scope, $rootScope, $location, taskService, sprintService) {
+  "utilService",
+  function (
+    $scope,
+    $rootScope,
+    $location,
+    taskService,
+    sprintService,
+    utilService
+  ) {
     $scope.handleCreateTask = function () {
       var data = {
         taskId: `BL-${taskService.uniqueId()}`,
@@ -173,6 +181,7 @@ app.controller("userBacklogController", [
       taskService
         .fetchTasks(1, 10, $scope.filterTask)
         .then(function (data) {
+          console.log("called");
           $rootScope.activeProjectTasks = data.data.data;
           var totalDocuments = data.data.totalDocuments;
           $rootScope.paginationCount = Math.ceil(totalDocuments / 10);

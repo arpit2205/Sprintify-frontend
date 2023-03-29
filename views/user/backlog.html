@@ -83,6 +83,7 @@
           id="filter-tasks-input"
           type="text"
           placeholder="Filter by task title"
+          ng-model-options="{debounce:500}"
           ng-model="filterTask.text"
           ng-change="handleTextSearchTask()"
         />

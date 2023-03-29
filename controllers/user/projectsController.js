@@ -18,6 +18,7 @@ app.run([
           .fetchProjects()
           .then(function (data) {
             $rootScope.projects = data.data.data;
+            console.log(data.data.data);
           })
           .catch(function (error) {
             console.log(error);
@@ -64,6 +65,8 @@ app.controller("userProjectsController", [
     $scope.addMembersChange = function () {
       if (!$scope.addProject.membersSearch) return;
 
+      console.log("called");
+
       userService
         .fetchUsersByRegex($scope.addProject.membersSearch)
         .then(function (data) {
@@ -101,7 +104,7 @@ app.controller("userProjectsController", [
       var members = [];
       for (let i = 0; i < $scope.selectedMembers.length; i++) {
         members.push({
-          memberId: $scope.selectedMembers[i]._id.toString(),
+          userId: $scope.selectedMembers[i]._id.toString(),
           name: $scope.selectedMembers[i].name,
           email: $scope.selectedMembers[i].email,
           roles: $scope.selectedMembers[i].roles,

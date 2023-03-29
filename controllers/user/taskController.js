@@ -17,9 +17,9 @@ app.run([
           $rootScope.activeProject ||
           JSON.parse(localStorage.getItem("project"));
 
-        $rootScope.projectUsers = JSON.parse(
-          localStorage.getItem("project")
-        ).members;
+        // $rootScope.projectUsers = JSON.parse(
+        //   localStorage.getItem("project")
+        // ).members;
 
         var parts = $location.path().split("/");
         var taskId = parts[parts.indexOf("backlog") + 1];
@@ -30,6 +30,16 @@ app.run([
           .fetchSingleTask(taskId)
           .then(function (data) {
             $rootScope.task = data.data.data;
+
+            // fetch project members (to assign tasks)
+            taskService
+              .fetchProjectMembers($rootScope.activeProject._id)
+              .then(function (data) {
+                $rootScope.projectMembers = data.data.data;
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
 
             // fetch task comments
             taskService
@@ -102,7 +112,7 @@ app.controller("userTaskController", [
         if ($scope.editTask.assignedTo !== "unassign") {
           var user = JSON.parse($scope.editTask.assignedTo);
           var assignedTo = {
-            userId: user.memberId,
+            userId: user.userId,
             name: user.name,
             email: user.email,
             roles: user.roles,

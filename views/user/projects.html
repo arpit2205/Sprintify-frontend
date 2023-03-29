@@ -66,6 +66,7 @@
                 type="text"
                 name="members"
                 placeholder="Search members"
+                ng-model-options="{debounce: 200}"
                 ng-model="addProject.membersSearch"
                 ng-change="addMembersChange()"
               />

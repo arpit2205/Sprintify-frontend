@@ -28,13 +28,13 @@ app.run([
           .fetchWeeklyTaskDigestData($rootScope.activeProject._id)
           .then(function (data) {
             $rootScope.totalTasks =
-              data.data.data.percentCompletedTasks[0].total;
+              data.data.data.percentCompletedTasks[0]?.total || 0;
             $rootScope.completedTasks =
-              data.data.data.percentCompletedTasks[0].completed;
+              data.data.data.percentCompletedTasks[0]?.completed || 0;
             $rootScope.inProgressTasks =
               $rootScope.totalTasks - $rootScope.completedTasks;
             $rootScope.unassignedTasks =
-              data.data.data.unassignedTasksCount[0].count;
+              data.data.data.unassignedTasksCount[0]?.count || 0;
 
             $rootScope.statsLoading = false;
 
