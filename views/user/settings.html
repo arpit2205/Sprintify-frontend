@@ -1,0 +1,113 @@
+<div id="settings-container">
+  <div id="settings-header">
+    <h2 id="settings-title">Project settings</h2>
+
+    <div id="project-details-section " class="project-details-settings">
+      <div id="project-title-flex">
+        <h3 id="project-title">{{activeProject.title}}</h3>
+        <p id="project-status-tag">{{activeProject.status}}</p>
+      </div>
+      <p>{{activeProject.description}}</p>
+      <p id="project-owner">
+        Led by {{activeProject.owner.name}} | Created at
+        {{activeProject.createdAt}}
+      </p>
+    </div>
+  </div>
+
+  <div id="edit-project-form">
+    <h4 id="edit-project-title">Edit project details</h4>
+    <div class="flex">
+      <input
+        type="text"
+        name="title"
+        placeholder="Project title"
+        ng-model="editProject.title"
+      />
+
+      <input
+        type="text"
+        name="description"
+        placeholder="Description"
+        ng-model="editProject.description"
+      />
+
+      <select
+        id="edit-project-status-input"
+        name="status"
+        placeholder="Status"
+        ng-model="editProject.status"
+
+      >
+        <option value="" disabled selected>Status</option>
+        <option value="planning">Planning</option>
+        <option value="in-progress">In-progress</option>
+        <option value="completed">Completed</option>
+        <option value="closed">Closed</option>
+        <option value="abandoned">Abandoned</option>
+      </select>
+
+      <button id="edit-project-btn" ng-click="handleEditProject()">
+        Update
+      </button>
+    </div>
+
+    <h4 id="add-members-title">Add members to this project</h4>
+
+    <div class="flex">
+      <div id="add-members-input-component">
+        <input
+          id="add-members-input"
+          type="text"
+          name="members"
+          placeholder="Search members"
+          ng-model-options="{debounce: 200}"
+          ng-model="editProject.membersSearch"
+          ng-change="addMembersChange()"
+        />
+
+        <div id="selected-members-list">
+          <p ng-repeat="user in selectedMembers">
+            {{user.name}}<i
+              class="fa-sharp fa-solid fa-xmark"
+              id="cross-icon"
+              ng-click="handleRemoveSelectedMember(user)"
+            ></i>
+          </p>
+        </div>
+
+        <div id="members-list" ng-show="editProject.membersSearch">
+          <p
+            ng-repeat="user in results"
+            ng-click="handleSelectMember(user)"
+            
+          >
+            {{user.name}} ({{user.email}})
+          </p>
+        </div>
+      </div>
+
+      <button id="invite-members-btn" ng-click="handleInviteMembers()">
+        Add members
+      </button>
+    </div>
+  </div>
+
+  <div id="members-table-section">
+    <h4 id="table-title">Members of this project</h4>
+    <table id="members-table">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Action</th>
+            
+        </tr>
+        <tr ng-repeat="user in projectMembers" ng-if="user.userId !== activeProject.owner.userId">
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td><button class="remove-access-btn" ng-click="handleRemoveUserAccess(user)">Remove access</button></td>
+        </tr>
+    </table>
+  </div>
+  </div>
+</div>

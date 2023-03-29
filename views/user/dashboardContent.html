@@ -6,7 +6,10 @@
         <p id="project-status-tag">{{activeProject.status}}</p>
       </div>
       <p>{{activeProject.description}}</p>
-      <p id="project-owner">Led by {{activeProject.owner.name}}</p>
+      <p id="project-owner">
+        Led by {{activeProject.owner.name}} | Created at
+        {{activeProject.createdAt}}
+      </p>
     </div>
 
     <div id="stats-container">

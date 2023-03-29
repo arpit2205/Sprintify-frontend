@@ -116,9 +116,10 @@ app.config([
       controller: "userSprintController",
     });
 
-    $stateProvider.state("user.board", {
-      url: "/board",
-      templateUrl: "views/user/board.html",
+    $stateProvider.state("user.settings", {
+      url: "/settings",
+      templateUrl: "views/user/settings.html",
+      controller: "userSettingsController",
     });
 
     $stateProvider.state("user.task", {

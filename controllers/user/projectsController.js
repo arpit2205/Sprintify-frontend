@@ -12,6 +12,7 @@ app.run([
         $rootScope.selectedSprint = null;
         $rootScope.paginationCount = null;
         $rootScope.paginationArray = null;
+        $rootScope.projectMembers = null;
 
         // fetch projects
         projectService
@@ -64,8 +65,6 @@ app.controller("userProjectsController", [
 
     $scope.addMembersChange = function () {
       if (!$scope.addProject.membersSearch) return;
-
-      console.log("called");
 
       userService
         .fetchUsersByRegex($scope.addProject.membersSearch)

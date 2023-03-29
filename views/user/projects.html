@@ -105,6 +105,10 @@
           </div>
         </div>
 
+        <div ng-show="projects.length === 0">
+          <p>You haven't been invited to any projects yet</p>
+        </div>
+
         <div id="projects-list">
           <div
             ng-repeat="project in projects"

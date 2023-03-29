@@ -1,0 +1,110 @@
+#settings-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#settings-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-details-settings {
+  margin-top: 16px;
+  padding: 16px 16px 20px 16px;
+  border-radius: 8px;
+  border: 1px solid #eeeeee;
+}
+
+#edit-project-form {
+  /* margin: 16px 0; */
+  display: flex;
+  margin-top: 24px;
+  width: 100%;
+  flex-direction: column;
+  border-radius: 8px;
+}
+
+#edit-project-title {
+  margin-bottom: 8px;
+}
+
+#edit-project-form input {
+  font-size: 16px;
+  padding: 8px 12px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+#edit-project-status-input {
+  height: 38px;
+}
+
+#edit-project-btn {
+  font-size: 14px;
+  padding: 8px 12px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  background-color: var(--primary-blue);
+  color: white;
+  font-weight: bold;
+  height: 38px;
+  width: 200px;
+  text-transform: uppercase;
+}
+
+#add-members-title {
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+#invite-members-btn {
+  font-size: 14px;
+  padding: 8px 12px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  background-color: var(--primary-blue-alpha);
+  color: var(--primary-blue);
+  border: 2px solid var(--primary-blue);
+  font-weight: bold;
+  height: 38px;
+  width: 160px;
+  text-transform: uppercase;
+}
+
+#members-table-section {
+  margin-top: 24px;
+  width: 100%;
+}
+#table-title {
+  color: var(--primary-blue);
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+#members-table {
+  margin-top: 8px;
+  width: 100%;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #eeeeee;
+  text-align: left;
+}
+
+#members-table td {
+  width: 100px;
+}
+
+#members-table th {
+  padding-bottom: 8px;
+}
+
+.remove-access-btn {
+  color: var(--primary-red);
+  background-color: white;
+  padding: 0;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 14px;
+}
