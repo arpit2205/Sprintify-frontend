@@ -90,10 +90,16 @@
   border-radius: 8px;
   border: 1px solid #eeeeee;
   text-align: left;
+  border-collapse: separate;
+  border-spacing: 0 8px;
 }
 
 #members-table td {
   width: 100px;
+}
+
+#members-table tr {
+  margin-bottom: 8px;
 }
 
 #members-table th {

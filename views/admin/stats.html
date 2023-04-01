@@ -1,0 +1,49 @@
+<div id="admin-stats-container">
+  <div id="admin-stats-header">
+    <h3>Brand admin stats</h3>
+
+    <div id="numeric-stats-section">
+      <div class="numeric-stat">
+        <p>Total users</p>
+        <h4>{{totalUsers}}</h4>
+      </div>
+
+      <div class="numeric-stat">
+        <p>Total projects</p>
+        <h4>{{totalProjects}}</h4>
+      </div>
+
+      <div class="numeric-stat">
+        <p>Active projects</p>
+        <h4>{{notCompletedProjects}}</h4>
+      </div>
+
+      <div class="numeric-stat">
+        <p>Completed projects</p>
+        <h4>{{completedProjects}}</h4>
+      </div>
+    </div>
+  </div>
+
+  <h4 id="active-projects-title">Active Projects</h4>
+
+  <div id="projects-table-div">
+    <table id="projects-table">
+      <tr>
+        <th>Project title</th>
+        <th>Status</th>
+        <th>Owner</th>
+        <th>CreatedAt</th>
+        <th>Backlog items</th>
+      </tr>
+
+      <tr ng-repeat="project in brandProjects">
+        <td>{{project.title}}</td>
+        <td>{{project.status}}</td>
+        <td>{{project.owner.name}} [{{project.owner.email}}]</td>
+        <td>{{project.createdAt}}</td>
+        <td>{{project.items}}</td>
+      </tr>
+    </table>
+  </div>
+</div>

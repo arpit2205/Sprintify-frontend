@@ -99,13 +99,17 @@
         <tr>
             <th>Name</th>
             <th>Email</th>
+            <th>Role</th>
             <th>Action</th>
             
         </tr>
-        <tr ng-repeat="user in projectMembers" ng-if="user.userId !== activeProject.owner.userId">
-            <td>{{user.name}}</td>
+        <tr ng-repeat="user in projectMembers" >
+            <td>{{user.name}} <span class="tag completed-tag" ng-if="user.userId === activeProject.owner.userId">Owner</span></td>
             <td>{{user.email}}</td>
-            <td><button class="remove-access-btn" ng-click="handleRemoveUserAccess(user)">Remove access</button></td>
+            <td>{{user.roles[1]}}</td>
+            <td><button class="remove-access-btn" ng-click="handleRemoveUserAccess(user)" ng-if="user.userId !== activeProject.owner.userId">Remove access</button>
+            
+            </td>
         </tr>
     </table>
   </div>

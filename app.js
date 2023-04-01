@@ -85,6 +85,12 @@ app.config([
       controller: "adminHomeController",
     });
 
+    $stateProvider.state("admin.stats", {
+      url: "/stats",
+      templateUrl: "views/admin/stats.html",
+      controller: "adminStatsController",
+    });
+
     // users
     $stateProvider.state("projects", {
       url: "/user/projects",

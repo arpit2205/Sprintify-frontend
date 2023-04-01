@@ -80,7 +80,8 @@ angular.module("app").factory("userChartService", [
         var overallData = data.percentCompletedTasks[0];
 
         var percentComplete =
-          (parseInt(overallData.completed) / parseInt(overallData.total)) * 100;
+          (parseInt(overallData?.completed) / parseInt(overallData?.total)) *
+          100;
 
         var ctx = document.getElementById("overall-task-graph");
         var myChart = new Chart(ctx, {
@@ -111,10 +112,10 @@ angular.module("app").factory("userChartService", [
             datasets: [
               {
                 data: [
-                  data.todo,
-                  data.inProgress,
-                  data.testing,
-                  data.completed,
+                  data?.todo,
+                  data?.inProgress,
+                  data?.testing,
+                  data?.completed,
                 ],
                 backgroundColor: ["#172b4d", "#0052cc", "#ffab00", "#36b37e"],
                 borderColor: ["#172b4d", "#0052cc", "#ffab00", "#36b37e"],
@@ -161,7 +162,7 @@ angular.module("app").factory("userChartService", [
                   "#ffab00",
                 ],
                 borderWidth: 1,
-                barThickness: 80,
+                barThickness: 40,
                 borderRadius: 15,
               },
             ],
@@ -208,6 +209,9 @@ angular.module("app").factory("userChartService", [
             (onTimeCompletedSprints + completedOverdueSprints)) *
             100
         );
+
+        console.log("overdue", data.completedOverdueSprints[0]?.count);
+        console.log("ontime", data.onTimeCompleted[0]?.count);
 
         $rootScope.sprintCompletionLikely =
           onTimeCompletedPercent < 25
