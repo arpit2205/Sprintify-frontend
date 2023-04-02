@@ -32,6 +32,7 @@
 
     <select name="role" placeholder="Role" ng-model="createUser.role" required>
       <option value="" disabled selected>Role</option>
+      <option value="director">Director</option>
       <option value="manager">Manager</option>
       <option value="member">Member</option>
     </select>
@@ -60,7 +61,9 @@
     <td>{{user.name}}</td>
     <td>{{user.email}}</td>
     <td>
-      User ({{user.roles.indexOf('member') === -1 ? 'Manager' : 'Member'}})
+      User ({{user.roles.indexOf('director') === -1 ?
+      user.roles.indexOf('manager') === -1 ? 'Member' : 'Manager' :
+      'Director'}})
     </td>
     <td>{{user.brand.name}}</td>
     <td>{{user.createdAt}}</td>

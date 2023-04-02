@@ -20,6 +20,9 @@ angular.module("app").factory("userChartService", [
           dates.push(formattedDate);
         }
 
+        console.log(data);
+        console.log(dates);
+
         var created = [];
         var completed = [];
 
@@ -27,21 +30,36 @@ angular.module("app").factory("userChartService", [
         var j = 0;
 
         for (var i = 0; i < dates.length; i++) {
-          if (data.weeklyCreatedTasks[k]?._id === dates[i]) {
-            created.push(data.weeklyCreatedTasks[k].created_count);
-
-            k++;
-          } else {
-            created.push(0);
+          for (var j = 0; j < data.weeklyCreatedTasks.length; j++) {
+            var found = false;
+            if (dates[i] === data.weeklyCreatedTasks[j]?._id) {
+              created.push(data.weeklyCreatedTasks[j].created_count);
+              found = true;
+              break;
+            }
           }
 
-          if (data.weeklyCompletedTasks[j]?._id === dates[i]) {
-            completed.push(data.weeklyCompletedTasks[j].completed_count);
-            j++;
-          } else {
+          if (!found) {
+            created.push(0);
+          }
+        }
+
+        for (var i = 0; i < dates.length; i++) {
+          for (var j = 0; j < data.weeklyCompletedTasks.length; j++) {
+            var found = false;
+            if (dates[i] === data.weeklyCompletedTasks[j]?._id) {
+              completed.push(data.weeklyCompletedTasks[j].completed_count);
+              found = true;
+              break;
+            }
+          }
+
+          if (!found) {
             completed.push(0);
           }
         }
+
+        console.log(created, completed);
 
         new Chart("weekly-task-stats-graph", {
           type: "line",

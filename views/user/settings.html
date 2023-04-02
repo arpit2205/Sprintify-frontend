@@ -106,7 +106,9 @@
         <tr ng-repeat="user in projectMembers" >
             <td>{{user.name}} <span class="tag completed-tag" ng-if="user.userId === activeProject.owner.userId">Owner</span></td>
             <td>{{user.email}}</td>
-            <td>{{user.roles[1]}}</td>
+            <td> User ({{user.roles.indexOf('director') === -1 ?
+              user.roles.indexOf('manager') === -1 ? 'Member' : 'Manager' :
+              'Director'}})</td>
             <td><button class="remove-access-btn" ng-click="handleRemoveUserAccess(user)" ng-if="user.userId !== activeProject.owner.userId">Remove access</button>
             
             </td>
