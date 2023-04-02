@@ -35,7 +35,7 @@ app.run([
               }
 
               if (!found) {
-                $rootScope.brandProjects[i].count = 0;
+                $rootScope.brandProjects[i].items = 0;
               }
             }
           })

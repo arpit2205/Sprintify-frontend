@@ -65,6 +65,18 @@ angular.module("app").factory("projectService", [
           }
         );
       },
+
+      deleteProject: function () {
+        var jwtToken = localStorage.getItem("jwt-token");
+        return $http.delete(
+          `http://localhost:5000/api/brand-user/projects/delete-project/${$rootScope.activeProject._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }
+        );
+      },
     };
   },
 ]);

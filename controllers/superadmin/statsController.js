@@ -52,6 +52,8 @@ app.controller("superadminStatsController", [
         .then(function (data) {
           var data = data.data.data;
 
+          console.log(data);
+
           $rootScope.totalBrandProjects = data.projectCounts[0]?.total || 0;
           $rootScope.completedBrandProjects =
             data.projectCounts[0]?.completed || 0;
@@ -78,7 +80,7 @@ app.controller("superadminStatsController", [
             }
 
             if (!found) {
-              $rootScope.projectList[i].count = 0;
+              $rootScope.projectList[i].items = 0;
             }
           }
         })

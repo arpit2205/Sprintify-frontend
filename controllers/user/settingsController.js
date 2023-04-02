@@ -160,5 +160,17 @@ app.controller("userSettingsController", [
           console.log(error);
         });
     };
+
+    $scope.handleDeleteProject = function () {
+      projectService
+        .deleteProject()
+        .then(function (data) {
+          console.log(data.data.data);
+          $location.path("/user/projects");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
   },
 ]);

@@ -6,6 +6,7 @@
       <div id="project-title-flex">
         <h3 id="project-title">{{activeProject.title}}</h3>
         <p id="project-status-tag">{{activeProject.status}}</p>
+        <button id="delete-project-btn" ng-click="handleDeleteProject()"><i class="fa-solid fa-triangle-exclamation" class="icon-mr"></i> Delete project</button>
       </div>
       <p>{{activeProject.description}}</p>
       <p id="project-owner">
