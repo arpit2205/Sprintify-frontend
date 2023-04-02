@@ -1,0 +1,89 @@
+<div id="superadmin-stats-container">
+  <div id="superadmin-stats-header">
+    <h3>Superadmin stats</h3>
+
+    <div id="numeric-stats-section">
+      <div class="numeric-stat">
+        <p>Total brands</p>
+        <h4>{{totalBrands}}</h4>
+      </div>
+
+      <div class="numeric-stat">
+        <p>Total users</p>
+        <h4>{{totalUsers}}</h4>
+      </div>
+
+      <div class="numeric-stat">
+        <p>Active projects</p>
+        <h4>{{totalProjects}}</h4>
+      </div>
+
+      <div class="numeric-stat">
+        <p>Total backlog items</p>
+        <h4>{{totalTasks}}</h4>
+      </div>
+    </div>
+  </div>
+
+  <div id="superadmin-brands-list">
+    <h4>
+      Active brands <span id="info">[Select a brand to view its stats]</span>
+    </h4>
+
+    <div id="brands-list">
+      <div
+        ng-repeat="brand in brandsList"
+        class="brand-list-item"
+        ng-click="handleBrandClick(brand)"
+      >
+        <img src="{{brand.logoUrl}}" alt="" />
+        <p>{{brand.name}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="brand-wise-details" ng-show="selectedBrand">
+    <h4>Brand-wise details</h4>
+    <div id="numeric-stats-section">
+      <div class="numeric-stat">
+        <p>Total users</p>
+        <h4>{{totalBrandUsers}}</h4>
+      </div>
+
+      <div class="numeric-stat">
+        <p>Total projects</p>
+        <h4>{{totalBrandProjects}}</h4>
+      </div>
+
+      <div class="numeric-stat">
+        <p>Active projects</p>
+        <h4>{{notCompletedBrandProjects}}</h4>
+      </div>
+
+      <div class="numeric-stat">
+        <p>Completed projects</p>
+        <h4>{{completedBrandProjects}}</h4>
+      </div>
+    </div>
+
+    <div id="projects-table-div">
+      <table id="projects-table">
+        <tr>
+          <th>Project title</th>
+          <th>Status</th>
+          <th>Owner</th>
+          <th>CreatedAt</th>
+          <th>Backlog items</th>
+        </tr>
+
+        <tr ng-repeat="project in projectList">
+          <td>{{project.title}}</td>
+          <td>{{project.status}}</td>
+          <td>{{project.owner.name}} [{{project.owner.email}}]</td>
+          <td>{{project.createdAt}}</td>
+          <td>{{project.items}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

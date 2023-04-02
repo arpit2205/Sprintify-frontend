@@ -55,7 +55,5 @@ app.controller("adminStatsController", [
     $scope.handleLogout = function () {
       loginService.authLogout();
     };
-
-    console.log("admin stats2");
   },
 ]);

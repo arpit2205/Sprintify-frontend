@@ -66,6 +66,12 @@ app.config([
       controller: "superadminHomeController",
     });
 
+    $stateProvider.state("superadmin.stats", {
+      url: "/stats",
+      templateUrl: "views/superadmin/stats.html",
+      controller: "superadminStatsController",
+    });
+
     $stateProvider.state("superadminResetPassword", {
       url: "/super-admin/reset-password",
       templateUrl: "views/superadmin/reset-password.html",
