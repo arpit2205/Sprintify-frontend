@@ -30,7 +30,8 @@
             <span id="task-id-span">{{task.taskId}}</span>{{task.title}}
           </h4>
           <p id="task-created-by">
-            Created by {{task.owner.name}} at {{task.createdAt}}
+            Created by {{task.owner.name}} at {{task.createdAt |
+            date:'dd-MM-yyyy h:mm a'}}
           </p>
 
           <div id="task-assigned-div">
@@ -192,7 +193,9 @@
           <div class="comment-item" ng-repeat="comment in comments">
             <div class="comment-info">
               <p class="comment-user">{{comment.user.name}}</p>
-              <p class="comment-time">{{comment.createdAt}}</p>
+              <p class="comment-time">
+                {{comment.createdAt | date:'dd-MM-yyyy h:mm a'}}
+              </p>
               <button
                 class="comment-delete-btn"
                 ng-show="authUser._id === comment.user.userId"
@@ -223,7 +226,9 @@
             <!-- <p class="task-log-createdAt">[{{log.createdAt}}]</p> -->
             <p class="task-log-text">
               {{log.logString}}
-              <span class="task-log-createdAt">[{{log.createdAt}}]</span>
+              <span class="task-log-createdAt"
+                >[{{log.createdAt | date:'dd-MM-yyyy h:mm a'}}]</span
+              >
             </p>
           </div>
         </div>

@@ -130,13 +130,14 @@
           </div>
         </div>
         <p class="sprint-created-by sprint-status">
-          Created by {{sprint.owner.name}} at {{sprint.createdAt}}
+          Created by {{sprint.owner.name}} at {{sprint.createdAt |
+          date:'dd-MM-yyyy h:mm a'}}
         </p>
         <p class="sprint-status" ng-show="sprint.isStarted">
-          Started on {{sprint.startedAt}}
+          Started on {{sprint.startedAt | date:'dd-MM-yyyy h:mm a'}}
         </p>
         <p class="sprint-status" ng-show="sprint.isCompleted">
-          Marked completed on {{sprint.completedAt}}
+          Marked completed on {{sprint.completedAt | date:'dd-MM-yyyy h:mm a'}}
         </p>
       </div>
     </div>
@@ -160,8 +161,8 @@
         <tr ng-repeat="sprint in sprints" ng-if="sprint.isCompleted">
           <td>{{sprint.name}}</td>
           <td>{{sprint.duration}}</td>
-          <td>{{sprint.startedAt.slice(0,10)}}</td>
-          <td>{{sprint.completedAt.slice(0,10)}}</td>
+          <td>{{sprint.startedAt | date:'dd-MM-yyyy h:mm a'}}</td>
+          <td>{{sprint.completedAt | date:'dd-MM-yyyy h:mm a'}}</td>
           <td>
             {{(sprint.completedAt.slice(8,10)) - (sprint.startedAt.slice(8,10))
             <= sprint.duration ? 'ON TIME' : 'OVERDUE'}}

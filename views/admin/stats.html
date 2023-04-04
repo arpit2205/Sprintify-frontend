@@ -49,7 +49,7 @@
         <td>{{project.title}}</td>
         <td>{{project.status}}</td>
         <td>{{project.owner.name}} [{{project.owner.email}}]</td>
-        <td>{{project.createdAt}}</td>
+        <td>{{project.createdAt | date:'dd-MM-yyyy h:mm a'}}</td>
         <td>{{project.items}}</td>
       </tr>
     </table>

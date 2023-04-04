@@ -11,7 +11,7 @@
       <p>{{activeProject.description}}</p>
       <p id="project-owner">
         Led by {{activeProject.owner.name}} | Created at
-        {{activeProject.createdAt}}
+        {{activeProject.createdAt | date:'dd-MM-yyyy h:mm a'}}
       </p>
     </div>
   </div>
