@@ -3,7 +3,8 @@ app.run([
   "$location",
   "taskService",
   "sprintService",
-  function ($rootScope, $location, taskService, sprintService) {
+  "toastService",
+  function ($rootScope, $location, taskService, sprintService, toastService) {
     $rootScope.$on("$locationChangeStart", function () {
       if ($location.path() === "/user/backlog") {
         $rootScope.task = null;
@@ -38,6 +39,7 @@ app.run([
           })
           .catch(function (error) {
             console.log(error);
+            toastService.showToast("Error fetching backlog", "warning", 3000);
           });
 
         // fetch project sprints
@@ -49,6 +51,7 @@ app.run([
           })
           .catch(function (error) {
             console.log(error);
+            toastService.showToast("Error fetching sprints", "warning", 3000);
           });
       }
     });
@@ -62,13 +65,15 @@ app.controller("userBacklogController", [
   "taskService",
   "sprintService",
   "utilService",
+  "toastService",
   function (
     $scope,
     $rootScope,
     $location,
     taskService,
     sprintService,
-    utilService
+    utilService,
+    toastService
   ) {
     $scope.handleCreateTask = function () {
       var data = {
@@ -83,13 +88,25 @@ app.controller("userBacklogController", [
         priority: $scope.createTask.priority,
       };
 
+      toastService.showToast(
+        `Creating new ${$scope.createTask.type}`,
+        "info",
+        3000
+      );
+
       taskService
         .createTask(data)
         .then(function (data) {
+          toastService.showToast(
+            `New ${$scope.createTask.type} created`,
+            "success",
+            3000
+          );
           taskService
             .fetchTasks(1, 10, $scope.filterTask)
             .then(function (data) {
               console.log(data.data.data);
+
               $rootScope.activeProjectTasks = data.data.data;
               var totalDocuments = data.data.totalDocuments;
               $rootScope.paginationCount = Math.ceil(totalDocuments / 10);
@@ -105,6 +122,11 @@ app.controller("userBacklogController", [
         })
         .catch(function (error) {
           console.log(error);
+          toastService.showToast(
+            `Error creating new ${$scope.createTask.type}`,
+            "warning",
+            3000
+          );
         });
     };
 
@@ -139,10 +161,13 @@ app.controller("userBacklogController", [
 
       $rootScope.selectedSprint = "";
 
+      toastService.showToast(`Reseting filters, please wait`, "info", 3000);
+
       taskService
         .fetchTasks(1, 10, $scope.filterTask)
         .then(function (data) {
           console.log(data.data.data);
+          toastService.showToast(`Filtered results fetched`, "success", 3000);
           $rootScope.activeProjectTasks = data.data.data;
           var totalDocuments = data.data.totalDocuments;
           $rootScope.paginationCount = Math.ceil(totalDocuments / 10);
@@ -158,11 +183,24 @@ app.controller("userBacklogController", [
     };
 
     $scope.handleApplyFilters = function () {
+      if (
+        !$scope.filterTask.type &&
+        !$scope.filterTask.priority &&
+        !$scope.filterTask.status &&
+        !$scope.filterTask.sprint &&
+        !$scope.filterTask.text
+      ) {
+        toastService.showToast(`Select at least one filter`, "info", 3000);
+        return;
+      }
+
+      toastService.showToast(`Applying filters, please wait`, "info", 3000);
       console.log($scope.filterTask);
       taskService
         .fetchTasks(1, 10, $scope.filterTask)
         .then(function (data) {
           console.log(data.data.data);
+          toastService.showToast(`Filtered results fetched`, "success", 3000);
           $rootScope.activeProjectTasks = data.data.data;
           var totalDocuments = data.data.totalDocuments;
           $rootScope.paginationCount = Math.ceil(totalDocuments / 10);
@@ -219,10 +257,17 @@ app.controller("userBacklogController", [
     };
 
     $scope.handleMoveToSprint = function () {
-      if (
-        !$scope.moveToSprint.sprint ||
-        $scope.selectedTasksForSprint.length === 0
-      ) {
+      if (!$scope.moveToSprint.sprint) {
+        toastService.showToast(`Select a sprint first`, "info", 3000);
+        return;
+      }
+
+      if ($scope.selectedTasksForSprint.length === 0) {
+        toastService.showToast(
+          `Select at least 1 backlog item to be added`,
+          "info",
+          3000
+        );
         return;
       }
 
@@ -237,10 +282,22 @@ app.controller("userBacklogController", [
         name: selectedSprint.name,
       };
 
+      toastService.showToast(
+        `Adding ${$scope.selectedTasksForSprint.length} items to ${selectedSprint.name} sprint`,
+        "info",
+        3000
+      );
+
       sprintService
         .addTasksToSprint(sprint, taskIdsToBeUpdated)
         .then(function (data) {
           console.log(data.data.data);
+
+          toastService.showToast(
+            `Added ${$scope.selectedTasksForSprint.length} items to ${selectedSprint.name} sprint`,
+            "success",
+            3000
+          );
 
           for (var i = 0; i < $rootScope.activeProjectTasks.length; i++) {
             if (
@@ -254,11 +311,21 @@ app.controller("userBacklogController", [
         })
         .catch(function (error) {
           console.log(error);
+          toastService.showToast(
+            `Error adding tasks to sprint`,
+            "warning",
+            3000
+          );
         });
     };
 
     $scope.handleRemoveFromSprint = function () {
       if ($scope.selectedTasksForSprint.length === 0) {
+        toastService.showToast(
+          `Select at least 1 backlog item to be removed from sprint`,
+          "info",
+          3000
+        );
         return;
       }
 
@@ -267,10 +334,22 @@ app.controller("userBacklogController", [
         taskIdsToBeUpdated.push($scope.selectedTasksForSprint[i]._id);
       }
 
+      toastService.showToast(
+        `Removing ${taskIdsToBeUpdated.length} items from their sprint`,
+        "info",
+        3000
+      );
+
       sprintService
         .addTasksToSprint(null, taskIdsToBeUpdated)
         .then(function (data) {
           console.log(data.data.data);
+
+          toastService.showToast(
+            `Removed ${taskIdsToBeUpdated.length} items from their sprint`,
+            "success",
+            3000
+          );
 
           for (var i = 0; i < $rootScope.activeProjectTasks.length; i++) {
             if (
@@ -284,6 +363,11 @@ app.controller("userBacklogController", [
         })
         .catch(function (error) {
           console.log(error);
+          toastService.showToast(
+            `Error removing items from sprint`,
+            "warning",
+            3000
+          );
         });
     };
 

@@ -3,7 +3,8 @@ app.run([
   "$location",
   "projectService",
   "userService",
-  function ($rootScope, $location, projectService, userService) {
+  "toastService",
+  function ($rootScope, $location, projectService, userService, toastService) {
     $rootScope.$on("$locationChangeStart", function () {
       if ($location.path() === "/user/projects") {
         // reset tasks
@@ -23,17 +24,8 @@ app.run([
           })
           .catch(function (error) {
             console.log(error);
+            toastService.showToast("Error fetching projects", "warning", 3000);
           });
-
-        // userService
-        //   .fetchUsers()
-        //   .then(function (data) {
-        //     $rootScope.users = data.data.data;
-        //     localStorage.setItem("users", JSON.stringify(data.data.data));
-        //   })
-        //   .catch(function (error) {
-        //     console.log(error);
-        //   });
       }
     });
   },
@@ -47,6 +39,7 @@ app.controller("userProjectsController", [
   "projectService",
   "userService",
   "utilService",
+  "toastService",
   function (
     $scope,
     $rootScope,
@@ -54,13 +47,21 @@ app.controller("userProjectsController", [
     loginService,
     projectService,
     userService,
-    utilService
+    utilService,
+    toastService
   ) {
     $scope.addProjectForm = false;
     $scope.selectedMembers = [];
 
+    $scope.addProject = {
+      title: "",
+      description: "",
+      status: "",
+    };
+
     $scope.handleLogout = function () {
       loginService.authLogout();
+      toastService.showToast("Logged out", "success", 3000);
     };
 
     $scope.addMembersChange = function () {
@@ -100,6 +101,17 @@ app.controller("userProjectsController", [
 
     // submit form
     $scope.handleCreateProject = function () {
+      console.log($scope.addProject);
+
+      if (
+        !$scope.addProject.title ||
+        !$scope.addProject.description ||
+        !$scope.addProject.status
+      ) {
+        toastService.showToast("Please fill all fields", "warning", 3000);
+        return;
+      }
+
       var members = [];
       for (let i = 0; i < $scope.selectedMembers.length; i++) {
         members.push({
@@ -121,9 +133,21 @@ app.controller("userProjectsController", [
         .createProject(data)
         .then(function (data) {
           $rootScope.projects.push(data.data.data);
+
+          $scope.addProject.membersSearch = "";
+          $scope.selectedMembers = [];
+
+          $scope.addProjectForm = false;
+
+          toastService.showToast(
+            "New project created successfully",
+            "success",
+            3000
+          );
         })
         .catch(function (error) {
           console.log(error);
+          toastService.showToast("Error creating new project", "warning", 3000);
         });
     };
 

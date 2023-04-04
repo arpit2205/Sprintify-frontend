@@ -3,7 +3,8 @@ app.run([
   "$location",
   "sprintService",
   "taskService",
-  function ($rootScope, $location, sprintService, taskService) {
+  "toastService",
+  function ($rootScope, $location, sprintService, taskService, toastService) {
     $rootScope.$on("$locationChangeSuccess", function () {
       if ($location.path() === "/user/sprints") {
         $rootScope.task = null;
@@ -91,6 +92,7 @@ app.run([
           })
           .catch(function (error) {
             console.log(error);
+            toastService.showToast("Error fetching sprints", "warning", 3000);
           });
       }
     });
@@ -102,7 +104,8 @@ app.controller("userSprintController", [
   "$rootScope",
   "$location",
   "sprintService",
-  function ($scope, $rootScope, $location, sprintService) {
+  "toastService",
+  function ($scope, $rootScope, $location, sprintService, toastService) {
     $scope.handleCreateSprint = function () {
       var data = {
         name: $scope.createSprint.name,
@@ -114,13 +117,21 @@ app.controller("userSprintController", [
         duration: $scope.createSprint.duration,
       };
 
+      toastService.showToast("Creating new sprint", "info", 3000);
+
       sprintService
         .createSprint(data)
         .then(function (data) {
           $rootScope.sprints.unshift(data.data.data);
+          toastService.showToast(
+            "New sprint created successfully",
+            "success",
+            3000
+          );
         })
         .catch(function (error) {
           console.log(error);
+          toastService.showToast("Error creating new sprint", "warning", 3000);
         });
     };
 
@@ -130,10 +141,17 @@ app.controller("userSprintController", [
     };
 
     $scope.handleStartSprint = function (sprint) {
+      toastService.showToast(`Starting ${sprint.name} sprint`, "info", 3000);
       sprintService
         .startSprint(sprint._id)
         .then(function (data) {
           var updatedSprint = data.data.data;
+
+          toastService.showToast(
+            `${sprint.name} sprint successfully started`,
+            "success",
+            3000
+          );
 
           // calculate days left
           var date1 = new Date(updatedSprint.startedAt.toString());
@@ -157,20 +175,32 @@ app.controller("userSprintController", [
         })
         .catch(function (error) {
           console.log(error);
+          toastService.showToast(`Error starting sprint`, "warning", 3000);
         });
     };
 
     $scope.handleCompleteSprint = function (sprint) {
+      toastService.showToast(
+        `Marking ${sprint.name} sprint as completed`,
+        "info",
+        3000
+      );
       sprintService
         .finishSprint(sprint._id)
         .then(function (data) {
           console.log(data.data.data);
+          toastService.showToast(
+            `${sprint.name} sprint marked completed`,
+            "success",
+            3000
+          );
           var updatedSprint = data.data.data;
           var index = $rootScope.sprints.indexOf(sprint);
           $rootScope.sprints[index] = updatedSprint;
         })
         .catch(function (error) {
           console.log(error);
+          toastService.showToast(`Error completing sprint`, "warning", 3000);
         });
     };
   },

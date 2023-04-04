@@ -2,7 +2,8 @@ app.run([
   "$rootScope",
   "$location",
   "superadminStatsService",
-  function ($rootScope, $location, superadminStatsService) {
+  "toastService",
+  function ($rootScope, $location, superadminStatsService, toastService) {
     $rootScope.$on("$locationChangeStart", function () {
       if ($location.path() === "/super-admin/stats") {
         superadminStatsService
@@ -20,6 +21,7 @@ app.run([
           })
           .catch(function (error) {
             console.log(error);
+            toastService.showToast("Error fetching stats", "warning", 3000);
           });
       }
     });
@@ -32,21 +34,26 @@ app.controller("superadminStatsController", [
   "$location",
   "loginService",
   "superadminStatsService",
+  "toastService",
   function (
     $scope,
     $rootScope,
     $location,
     loginService,
-    superadminStatsService
+    superadminStatsService,
+    toastService
   ) {
     $scope.handleLogout = function () {
       loginService.authLogout();
+      toastService.showToast("Logged out", "success", 3000);
     };
 
     $scope.selectedBrand = null;
 
     $scope.handleBrandClick = function (brand) {
       $scope.selectedBrand = brand;
+      toastService.showToast("Fetching brand details", "info", 3000);
+
       superadminStatsService
         .fetchBrandWiseStats(brand._id)
         .then(function (data) {
@@ -86,6 +93,11 @@ app.controller("superadminStatsController", [
         })
         .catch(function (error) {
           console.log(error);
+          toastService.showToast(
+            "Error fetching brand details",
+            "warning",
+            3000
+          );
         });
     };
   },

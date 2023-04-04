@@ -3,13 +3,18 @@ app.controller("loginController", [
   "$scope",
   "$location",
   "loginService",
-  function ($rootScope, $scope, $location, loginService) {
+  "toastService",
+  function ($rootScope, $scope, $location, loginService, toastService) {
     $scope.handleLogin = function () {
       $scope.login.error = "";
+
+      toastService.showToast("Logging in, please wait", "info", 3000);
 
       loginService
         .authLogin($scope.login)
         .then(function (data) {
+          toastService.showToast("Login successful", "success", 3000);
+
           $scope.login.error = "";
 
           var authUser = data.data.data.user;
@@ -44,6 +49,7 @@ app.controller("loginController", [
         })
         .catch(function (error) {
           $scope.login.error = error.data.data;
+          toastService.showToast("Error logging in", "warning", 3000);
         });
     };
   },

@@ -2,7 +2,8 @@ app.run([
   "$rootScope",
   "$location",
   "adminStatsService",
-  function ($rootScope, $location, adminStatsService) {
+  "toastService",
+  function ($rootScope, $location, adminStatsService, toastService) {
     $rootScope.$on("$locationChangeStart", function () {
       if ($location.path() === "/brand-admin/stats") {
         adminStatsService
@@ -41,6 +42,7 @@ app.run([
           })
           .catch(function (error) {
             console.log(error);
+            toastService.showToast("Error fetching stats", "warning", 3000);
           });
       }
     });
@@ -51,9 +53,11 @@ app.controller("adminStatsController", [
   "$scope",
   "$rootScope",
   "loginService",
-  function ($scope, $rootScope, loginService, createUserService) {
+  "toastService",
+  function ($scope, $rootScope, loginService, createUserService, toastService) {
     $scope.handleLogout = function () {
       loginService.authLogout();
+      toastService.showToast("Logged out", "success", 3000);
     };
   },
 ]);

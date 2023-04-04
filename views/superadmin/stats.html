@@ -2,7 +2,15 @@
   <div id="superadmin-stats-header">
     <h3>Superadmin stats</h3>
 
-    <div id="numeric-stats-section">
+    <!-- Loader -->
+    <div class="loader-div" ng-hide="totalBrands">
+      <div class="lds-ripple">
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+
+    <div id="numeric-stats-section" ng-show="totalBrands">
       <div class="numeric-stat">
         <p>Total brands</p>
         <h4>{{totalBrands}}</h4>
@@ -25,7 +33,7 @@
     </div>
   </div>
 
-  <div id="superadmin-brands-list">
+  <div id="superadmin-brands-list" ng-show="brandsList">
     <h4>
       Active brands <span id="info">[Select a brand to view its stats]</span>
     </h4>

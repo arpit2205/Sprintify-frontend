@@ -146,19 +146,23 @@
 #add-project-form {
   /* margin: 16px 0; */
   display: flex;
-  padding: 24px;
+  /* padding: 24px; */
   width: 100%;
   flex-direction: column;
   border-radius: 8px;
   margin-bottom: 32px;
   margin-top: 8px;
-  box-shadow: var(--primary-blue) 0px 0px 0px 2px inset,
+  /* box-shadow: var(--primary-blue) 0px 0px 0px 2px inset,
     rgb(255, 255, 255) 10px -10px 0px -3px, var(--primary-green) 10px -10px,
-    rgb(255, 255, 255) 20px -20px 0px -3px;
+    rgb(255, 255, 255) 20px -20px 0px -3px; */
+  /* background-color: var(--primary-blue); */
 }
 
 #create-project-title {
   margin-bottom: 12px;
+  color: var(--primary-blue);
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 #add-project-form input {
