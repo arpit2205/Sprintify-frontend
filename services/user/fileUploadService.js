@@ -1,11 +1,13 @@
 app.service("fileUpload", [
   "$http",
   "$rootScope",
-  function ($http, $rootScope) {
+  "toastService",
+  function ($http, $rootScope, toastService) {
     return {
       uploadFileToUrl: function (file, uploadUrl) {
         var fd = new FormData();
         fd.append("image", file);
+        toastService.showToast("Uploading file, please wait", "info", 3000);
         $http
           .post(uploadUrl, fd, {
             transformRequest: angular.identity,
@@ -16,10 +18,16 @@ app.service("fileUpload", [
           })
           .then(function (data) {
             console.log(data);
+            toastService.showToast(
+              "File uploaded successfully",
+              "success",
+              3000
+            );
             $rootScope.task.attachments = data.data.data.attachments;
           })
           .catch(function (err) {
             console.log(err);
+            toastService.showToast("Error uploading file", "warning", 3000);
           });
       },
 

@@ -129,6 +129,8 @@ app.controller("userProjectsController", [
         members: members,
       };
 
+      toastService.showToast("Creating new project", "info", 3000);
+
       projectService
         .createProject(data)
         .then(function (data) {

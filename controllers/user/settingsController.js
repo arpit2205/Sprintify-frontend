@@ -2,7 +2,8 @@ app.run([
   "$rootScope",
   "$location",
   "taskService",
-  function ($rootScope, $location, taskService) {
+  "toastService",
+  function ($rootScope, $location, taskService, toastService) {
     $rootScope.$on("$locationChangeStart", function () {
       if ($location.path() === "/user/settings") {
         $rootScope.task = null;
@@ -29,6 +30,11 @@ app.run([
           })
           .catch(function (error) {
             console.log(error);
+            toastService.showToast(
+              "Error fetching project members",
+              "warning",
+              3000
+            );
           });
       }
     });
@@ -41,20 +47,48 @@ app.controller("userSettingsController", [
   "$location",
   "projectService",
   "userService",
-  function ($scope, $rootScope, $location, projectService, userService) {
+  "toastService",
+  function (
+    $scope,
+    $rootScope,
+    $location,
+    projectService,
+    userService,
+    toastService
+  ) {
     $scope.selectedMembers = [];
 
     $scope.handleEditProject = function () {
+      if (
+        !$scope.editProject.title &&
+        !$scope.editProject.description &&
+        !$scope.editProject.status
+      ) {
+        toastService.showToast("Make at least one change", "info", 3000);
+        return;
+      }
+      toastService.showToast("Updating project details", "info", 3000);
+
       projectService
         .editProjectDetails($scope.editProject)
         .then(function (data) {
           console.log(data.data.data);
+          toastService.showToast(
+            "Project details updated successfully",
+            "success",
+            3000
+          );
           $rootScope.activeProject = data.data.data;
           localStorage.removeItem("project");
           localStorage.setItem("project", JSON.stringify(data.data.data));
         })
         .catch(function (error) {
           console.log(error);
+          toastService.showToast(
+            "Error updating project details",
+            "warning",
+            3000
+          );
         });
     };
 
@@ -112,6 +146,11 @@ app.controller("userSettingsController", [
 
     $scope.handleInviteMembers = function () {
       if ($scope.selectedMembers.length === 0) {
+        toastService.showToast(
+          "Select at least one member to invite",
+          "info",
+          3000
+        );
         return;
       }
 
@@ -126,11 +165,23 @@ app.controller("userSettingsController", [
         });
       }
 
+      toastService.showToast(
+        "Adding selected members to this project",
+        "info",
+        3000
+      );
+
       projectService
         .addProjectMembers({ members: users })
         .then(function (data) {
           $scope.results = [];
           $scope.selectedMembers = [];
+
+          toastService.showToast(
+            "Selected members added to this project successfully",
+            "success",
+            3000
+          );
 
           var users = data.data.data;
 
@@ -140,6 +191,7 @@ app.controller("userSettingsController", [
         })
         .catch(function (error) {
           console.log(error);
+          toastService.showToast("Error selecting members", "warning", 3000);
         });
     };
 
@@ -150,26 +202,49 @@ app.controller("userSettingsController", [
         return;
       }
 
+      toastService.showToast(
+        `Removing ${user.name} from this project`,
+        "info",
+        3000
+      );
+
       projectService
         .removeMemberFromProject(user)
         .then(function (data) {
           console.log(data.data.data);
           $scope.projectMembers.splice(index, 1);
+          toastService.showToast(
+            `${user.name} was removed from this project successfully`,
+            "success",
+            3000
+          );
         })
         .catch(function (error) {
           console.log(error);
+          toastService.showToast(`Error removing user`, "success", 3000);
         });
     };
 
     $scope.handleDeleteProject = function () {
+      toastService.showToast(
+        `Initiating project delete, this may take some time`,
+        "info",
+        3000
+      );
       projectService
         .deleteProject()
         .then(function (data) {
           console.log(data.data.data);
+          toastService.showToast(
+            `Project deleted successfully`,
+            "success",
+            3000
+          );
           $location.path("/user/projects");
         })
         .catch(function (error) {
           console.log(error);
+          toastService.showToast(`Error deleting project`, "warning", 3000);
         });
     };
   },

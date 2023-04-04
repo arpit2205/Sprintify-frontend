@@ -3,7 +3,8 @@ app.run([
   "$location",
   "$stateParams",
   "taskService",
-  function ($rootScope, $location, $stateParams, taskService) {
+  "toastService",
+  function ($rootScope, $location, $stateParams, taskService, toastService) {
     $rootScope.$on("$locationChangeSuccess", function () {
       var regex = /^\/user\/backlog\/\w+$/;
       if (regex.test($location.path())) {
@@ -39,6 +40,11 @@ app.run([
               })
               .catch(function (error) {
                 console.log(error);
+                toastService.showToast(
+                  "Error fetching project members",
+                  "warning",
+                  3000
+                );
               });
 
             // fetch task comments
@@ -49,6 +55,11 @@ app.run([
               })
               .catch(function (error) {
                 console.log(error);
+                toastService.showToast(
+                  "Error fetching project comments",
+                  "warning",
+                  3000
+                );
               });
 
             // fetch task logs
@@ -59,10 +70,20 @@ app.run([
               })
               .catch(function (error) {
                 console.log(error);
+                toastService.showToast(
+                  "Error fetching project logs",
+                  "warning",
+                  3000
+                );
               });
           })
           .catch(function (error) {
             console.log(error);
+            toastService.showToast(
+              "Error fetching task details",
+              "warning",
+              3000
+            );
           });
       }
     });
@@ -98,6 +119,7 @@ app.controller("userTaskController", [
   "taskService",
   "$http",
   "fileUpload",
+  "toastService",
   function (
     $scope,
     $rootScope,
@@ -105,7 +127,8 @@ app.controller("userTaskController", [
     $stateParams,
     taskService,
     $http,
-    fileUpload
+    fileUpload,
+    toastService
   ) {
     $scope.handleEditTaskSave = function () {
       if ($scope.editTask.assignedTo) {
@@ -121,11 +144,28 @@ app.controller("userTaskController", [
         }
       }
 
+      if (
+        !$scope.editTask.type &&
+        !$scope.editTask.priority &&
+        !$scope.editTask.status &&
+        !$scope.editTask.assignedTo &&
+        !$scope.editTask.description
+      ) {
+        toastService.showToast("Select at least one change", "info", 3000);
+      }
+
+      toastService.showToast("Updating task details", "info", 3000);
+
       taskService
         .updateTaskDetails($rootScope.taskId, $scope.editTask)
         .then(function (data) {
           $rootScope.task = data.data.data;
           console.log(data.data.data);
+          toastService.showToast(
+            "Task details updated successfully",
+            "success",
+            3000
+          );
 
           $scope.editTask.assignedTo = null;
           $scope.editTask.description = null;
@@ -135,14 +175,22 @@ app.controller("userTaskController", [
         })
         .catch(function (error) {
           console.log(error);
+          toastService.showToast(
+            "Error updating task details",
+            "warning",
+            3000
+          );
         });
     };
 
     $scope.handleDeleteTask = function () {
+      toastService.showToast("Deleting task", "info", 3000);
       taskService
         .deleteTask($rootScope.taskId)
         .then(function (data) {
           console.log(data.data.data);
+
+          toastService.showToast("Task deleted successfully", "success", 3000);
 
           $rootScope.task = null;
           $rootScope.taskId = null;
@@ -151,26 +199,31 @@ app.controller("userTaskController", [
         })
         .catch(function (error) {
           console.log(error);
+          toastService.showToast("Error deleting task", "warning", 3000);
         });
     };
 
     $scope.handlePickTask = function () {
+      toastService.showToast("Assigning this task to you", "info", 3000);
       taskService
         .pickTask($rootScope.taskId)
         .then(function (data) {
           console.log(data.data.data);
+          toastService.showToast("Task assigned to you", "success", 3000);
           $rootScope.task = data.data.data;
         })
         .catch(function (error) {
           console.log(error);
+          toastService.showToast("Error assigning task", "warning", 3000);
         });
     };
 
     $scope.handleAddComment = function () {
       if (!$scope.commentText) {
+        toastService.showToast("Enter some text", "info", 3000);
         return;
       }
-      console.log($scope.commentText);
+
       var data = {
         task: {
           taskId: $rootScope.task._id,
@@ -183,26 +236,41 @@ app.controller("userTaskController", [
         text: $scope.commentText,
       };
 
+      toastService.showToast("Posting comment", "info", 3000);
+
       taskService
         .createComment(data)
         .then(function (data) {
           $rootScope.comments.unshift(data.data.data);
           $scope.commentText = null;
+          toastService.showToast(
+            "Comment posted successfully",
+            "success",
+            3000
+          );
         })
         .catch(function (error) {
           console.log(error);
+          toastService.showToast("Error posting comment", "warning", 3000);
         });
     };
 
     $scope.handleDeleteComment = function (comment) {
+      toastService.showToast("Deleting comment", "info", 3000);
       taskService
         .deleteComment(comment._id)
         .then(function (data) {
           var index = $rootScope.comments.indexOf(comment);
           $rootScope.comments.splice(index, 1);
+          toastService.showToast(
+            "Comment deleted successfully",
+            "success",
+            3000
+          );
         })
         .catch(function (error) {
           console.log(error);
+          toastService.showToast("Error deleting comment", "warning", 3000);
         });
     };
 
@@ -210,6 +278,7 @@ app.controller("userTaskController", [
       var file = $scope.myFile;
 
       if (!$scope.myFile) {
+        toastService.showToast("Select a file first", "info", 3000);
         return;
       }
 
@@ -219,13 +288,16 @@ app.controller("userTaskController", [
     };
 
     $scope.handleDeleteAttachment = function (image) {
+      toastService.showToast("Deleting file", "info", 3000);
       fileUpload
         .deleteFile($rootScope.task._id, image.key)
         .then(function (data) {
           $rootScope.task.attachments = data.data.data.attachments;
+          toastService.showToast("File deleted successfully", "success", 3000);
         })
         .catch(function (error) {
           console.log(error);
+          toastService.showToast("Error deleting file", "warning", 3000);
         });
     };
   },
