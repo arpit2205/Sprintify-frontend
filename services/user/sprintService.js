@@ -6,7 +6,7 @@ angular.module("app").factory("sprintService", [
       createSprint: function (data) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.post(
-          "http://localhost:5000/api/brand-user/sprints/create-sprint",
+          "https://curious-coveralls-ant.cyclic.app/api/brand-user/sprints/create-sprint",
           data,
           {
             headers: {
@@ -20,7 +20,7 @@ angular.module("app").factory("sprintService", [
         var jwtToken = localStorage.getItem("jwt-token");
         var project = $rootScope.activeProject;
         return $http.get(
-          `http://localhost:5000/api/brand-user/sprints/project/${project._id}?filter=${filter}`,
+          `https://curious-coveralls-ant.cyclic.app/api/brand-user/sprints/project/${project._id}?filter=${filter}`,
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,
@@ -32,7 +32,7 @@ angular.module("app").factory("sprintService", [
       fetchSprintStatus: function (projectId) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.get(
-          `http://localhost:5000/api/brand-user/sprints/status/${projectId}`,
+          `https://curious-coveralls-ant.cyclic.app/api/brand-user/sprints/status/${projectId}`,
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,
@@ -44,7 +44,7 @@ angular.module("app").factory("sprintService", [
       addTasksToSprint: function (sprint, taskIdsToBeUpdated) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.post(
-          `http://localhost:5000/api/brand-user/sprints/add-tasks`,
+          `https://curious-coveralls-ant.cyclic.app/api/brand-user/sprints/add-tasks`,
           {
             taskIdsToBeUpdated: taskIdsToBeUpdated,
             sprint: sprint,
@@ -60,7 +60,7 @@ angular.module("app").factory("sprintService", [
       startSprint: function (sprintId) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.patch(
-          `http://localhost:5000/api/brand-user/sprints/start/${sprintId}`,
+          `https://curious-coveralls-ant.cyclic.app/api/brand-user/sprints/start/${sprintId}`,
           null,
           {
             headers: {
@@ -73,7 +73,7 @@ angular.module("app").factory("sprintService", [
       finishSprint: function (sprintId) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.patch(
-          `http://localhost:5000/api/brand-user/sprints/finish/${sprintId}`,
+          `https://curious-coveralls-ant.cyclic.app/api/brand-user/sprints/finish/${sprintId}`,
           null,
           {
             headers: {

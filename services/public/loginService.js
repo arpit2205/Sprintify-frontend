@@ -5,7 +5,10 @@ angular.module("app").factory("loginService", [
   function ($http, $rootScope, $location) {
     return {
       authLogin: function (data) {
-        return $http.post("http://localhost:5000/api/auth/login", data);
+        return $http.post(
+          "https://curious-coveralls-ant.cyclic.app/api/auth/login",
+          data
+        );
       },
       authLogout: function () {
         localStorage.removeItem("jwt-token");

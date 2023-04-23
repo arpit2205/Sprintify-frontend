@@ -5,7 +5,7 @@ angular.module("app").factory("userStatsService", [
       fetchWeeklyTaskDigestData: function (projectId) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.get(
-          `http://localhost:5000/api/brand-user/tasks/weekly-chart/${projectId}`,
+          `https://curious-coveralls-ant.cyclic.app/api/brand-user/tasks/weekly-chart/${projectId}`,
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,
@@ -17,7 +17,7 @@ angular.module("app").factory("userStatsService", [
       fetchSprintStats: function (projectId) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.get(
-          `http://localhost:5000/api/brand-user/sprints/stats/${projectId}`,
+          `https://curious-coveralls-ant.cyclic.app/api/brand-user/sprints/stats/${projectId}`,
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,

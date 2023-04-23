@@ -35,7 +35,7 @@ app.service("fileUpload", [
         var jwtToken = localStorage.getItem("jwt-token");
 
         return $http.patch(
-          "http://localhost:5000/api/brand-user/tasks/delete-attachment",
+          "https://curious-coveralls-ant.cyclic.app/api/brand-user/tasks/delete-attachment",
           {
             taskId: taskId,
             imageKey: imageKey,

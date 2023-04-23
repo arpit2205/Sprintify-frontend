@@ -8,7 +8,7 @@ angular.module("app").factory("taskService", [
         var jwtToken = localStorage.getItem("jwt-token");
 
         return $http.get(
-          `http://localhost:5000/api/brand-user/tasks/project/${$rootScope.activeProject._id.toString()}?page=${page}&limit=${limit}&text=${
+          `https://curious-coveralls-ant.cyclic.app/api/brand-user/tasks/project/${$rootScope.activeProject._id.toString()}?page=${page}&limit=${limit}&text=${
             filters?.text
           }&type=${filters?.type}&status=${filters?.status}&priority=${
             filters?.priority
@@ -24,7 +24,7 @@ angular.module("app").factory("taskService", [
       createTask: function (data) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.post(
-          "http://localhost:5000/api/brand-user/tasks/create-task",
+          "https://curious-coveralls-ant.cyclic.app/api/brand-user/tasks/create-task",
           data,
           {
             headers: {
@@ -37,7 +37,7 @@ angular.module("app").factory("taskService", [
       fetchSingleTask: function (taskId) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.get(
-          `http://localhost:5000/api/brand-user/tasks/${taskId}`,
+          `https://curious-coveralls-ant.cyclic.app/api/brand-user/tasks/${taskId}`,
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,
@@ -49,7 +49,7 @@ angular.module("app").factory("taskService", [
       fetchProjectMembers: function (projectId) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.get(
-          `http://localhost:5000/api/brand-user/users/project-members/${projectId}`,
+          `https://curious-coveralls-ant.cyclic.app/api/brand-user/users/project-members/${projectId}`,
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,
@@ -61,7 +61,7 @@ angular.module("app").factory("taskService", [
       updateTaskDetails: function (taskId, data) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.patch(
-          `http://localhost:5000/api/brand-user/tasks/edit/${taskId}`,
+          `https://curious-coveralls-ant.cyclic.app/api/brand-user/tasks/edit/${taskId}`,
           data,
           {
             headers: {
@@ -74,7 +74,7 @@ angular.module("app").factory("taskService", [
       deleteTask: function (taskId) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.delete(
-          `http://localhost:5000/api/brand-user/tasks/delete/${taskId}`,
+          `https://curious-coveralls-ant.cyclic.app/api/brand-user/tasks/delete/${taskId}`,
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,
@@ -86,7 +86,7 @@ angular.module("app").factory("taskService", [
       pickTask: function (taskId) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.patch(
-          `http://localhost:5000/api/brand-user/tasks/pick-task/${taskId}`,
+          `https://curious-coveralls-ant.cyclic.app/api/brand-user/tasks/pick-task/${taskId}`,
           null,
           {
             headers: {
@@ -99,7 +99,7 @@ angular.module("app").factory("taskService", [
       createComment: function (data) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.post(
-          `http://localhost:5000/api/brand-user/tasks/comments/add-comment`,
+          `https://curious-coveralls-ant.cyclic.app/api/brand-user/tasks/comments/add-comment`,
           data,
           {
             headers: {
@@ -112,7 +112,7 @@ angular.module("app").factory("taskService", [
       fetchComments: function (taskId) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.get(
-          `http://localhost:5000/api/brand-user/tasks/comments/${taskId}`,
+          `https://curious-coveralls-ant.cyclic.app/api/brand-user/tasks/comments/${taskId}`,
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,
@@ -124,7 +124,7 @@ angular.module("app").factory("taskService", [
       deleteComment: function (commentId) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.delete(
-          `http://localhost:5000/api/brand-user/tasks/comments/${commentId}`,
+          `https://curious-coveralls-ant.cyclic.app/api/brand-user/tasks/comments/${commentId}`,
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,
@@ -136,7 +136,7 @@ angular.module("app").factory("taskService", [
       fetchLogs: function (taskId) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.get(
-          `http://localhost:5000/api/brand-user/tasks/logs/${taskId}`,
+          `https://curious-coveralls-ant.cyclic.app/api/brand-user/tasks/logs/${taskId}`,
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,

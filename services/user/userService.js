@@ -5,7 +5,7 @@ angular.module("app").factory("userService", [
       fetchUsers: function () {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.get(
-          "http://localhost:5000/api/brand-user/users/all-users",
+          "https://curious-coveralls-ant.cyclic.app/api/brand-user/users/all-users",
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,
@@ -17,7 +17,7 @@ angular.module("app").factory("userService", [
       fetchUsersByRegex: function (pattern) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.get(
-          `http://localhost:5000/api/brand-user/projects/users/${pattern}`,
+          `https://curious-coveralls-ant.cyclic.app/api/brand-user/projects/users/${pattern}`,
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,

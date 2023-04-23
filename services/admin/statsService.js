@@ -4,11 +4,14 @@ angular.module("app").factory("adminStatsService", [
     return {
       fetchNumericStats: function () {
         var jwtToken = localStorage.getItem("jwt-token");
-        return $http.get(`http://localhost:5000/api/brand-admin/stats/counts`, {
-          headers: {
-            Authorization: `Bearer ${jwtToken}`,
-          },
-        });
+        return $http.get(
+          `https://curious-coveralls-ant.cyclic.app/api/brand-admin/stats/counts`,
+          {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }
+        );
       },
     };
   },

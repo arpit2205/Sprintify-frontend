@@ -4,17 +4,20 @@ angular.module("app").factory("superadminStatsService", [
     return {
       fetchNumericStats: function () {
         var jwtToken = localStorage.getItem("jwt-token");
-        return $http.get(`http://localhost:5000/api/super-admin/stats/counts`, {
-          headers: {
-            Authorization: `Bearer ${jwtToken}`,
-          },
-        });
+        return $http.get(
+          `https://curious-coveralls-ant.cyclic.app/api/super-admin/stats/counts`,
+          {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }
+        );
       },
 
       fetchBrandWiseStats: function (brandId) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.get(
-          `http://localhost:5000/api/super-admin/stats/brand/${brandId}`,
+          `https://curious-coveralls-ant.cyclic.app/api/super-admin/stats/brand/${brandId}`,
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,

@@ -5,7 +5,7 @@ angular.module("app").factory("createAdminService", [
       createBrand: function (data) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.post(
-          "http://localhost:5000/api/super-admin/auth/register-brand",
+          "https://curious-coveralls-ant.cyclic.app/api/super-admin/auth/register-brand",
           {
             name: data.brandName,
             logoUrl: data.logoUrl,
@@ -21,7 +21,7 @@ angular.module("app").factory("createAdminService", [
       createAdmin: function (data) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.post(
-          "http://localhost:5000/api/super-admin/auth/register-brand-admin",
+          "https://curious-coveralls-ant.cyclic.app/api/super-admin/auth/register-brand-admin",
           {
             name: data.data.name,
             email: data.data.email,
@@ -43,7 +43,7 @@ angular.module("app").factory("createAdminService", [
       fetchAdmins: function () {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.get(
-          "http://localhost:5000/api/super-admin/brand-admins",
+          "https://curious-coveralls-ant.cyclic.app/api/super-admin/brand-admins",
 
           {
             headers: {

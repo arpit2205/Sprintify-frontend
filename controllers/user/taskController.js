@@ -282,7 +282,7 @@ app.controller("userTaskController", [
         return;
       }
 
-      var uploadUrl = `http://localhost:5000/api/brand-user/tasks/upload-attachment/${$rootScope.task._id}`;
+      var uploadUrl = `https://curious-coveralls-ant.cyclic.app/api/brand-user/tasks/upload-attachment/${$rootScope.task._id}`;
 
       fileUpload.uploadFileToUrl(file, uploadUrl);
     };

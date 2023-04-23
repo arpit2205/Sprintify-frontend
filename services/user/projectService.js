@@ -6,7 +6,7 @@ angular.module("app").factory("projectService", [
       fetchProjects: function () {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.get(
-          "http://localhost:5000/api/brand-user/projects/all-projects",
+          "https://curious-coveralls-ant.cyclic.app/api/brand-user/projects/all-projects",
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,
@@ -18,7 +18,7 @@ angular.module("app").factory("projectService", [
       createProject: function (data) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.post(
-          "http://localhost:5000/api/brand-user/projects/create-project",
+          "https://curious-coveralls-ant.cyclic.app/api/brand-user/projects/create-project",
           data,
           {
             headers: {
@@ -31,7 +31,7 @@ angular.module("app").factory("projectService", [
       editProjectDetails: function (data) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.patch(
-          `http://localhost:5000/api/brand-user/projects/edit-details/${$rootScope.activeProject._id}`,
+          `https://curious-coveralls-ant.cyclic.app/api/brand-user/projects/edit-details/${$rootScope.activeProject._id}`,
           data,
           {
             headers: {
@@ -44,7 +44,7 @@ angular.module("app").factory("projectService", [
       addProjectMembers: function (data) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.post(
-          `http://localhost:5000/api/brand-user/projects/add-members/${$rootScope.activeProject._id}`,
+          `https://curious-coveralls-ant.cyclic.app/api/brand-user/projects/add-members/${$rootScope.activeProject._id}`,
           data,
           {
             headers: {
@@ -57,7 +57,7 @@ angular.module("app").factory("projectService", [
       removeMemberFromProject: function (data) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.delete(
-          `http://localhost:5000/api/brand-user/projects/remove-member/${$rootScope.activeProject._id}/${data.userId}`,
+          `https://curious-coveralls-ant.cyclic.app/api/brand-user/projects/remove-member/${$rootScope.activeProject._id}/${data.userId}`,
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,
@@ -69,7 +69,7 @@ angular.module("app").factory("projectService", [
       deleteProject: function () {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.delete(
-          `http://localhost:5000/api/brand-user/projects/delete-project/${$rootScope.activeProject._id}`,
+          `https://curious-coveralls-ant.cyclic.app/api/brand-user/projects/delete-project/${$rootScope.activeProject._id}`,
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,

@@ -5,7 +5,7 @@ angular.module("app").factory("createUserService", [
       createUser: function (data) {
         var jwtToken = localStorage.getItem("jwt-token");
         return $http.post(
-          "http://localhost:5000/api/brand-admin/auth/register-brand-user",
+          "https://curious-coveralls-ant.cyclic.app/api/brand-admin/auth/register-brand-user",
           {
             name: data.name,
             email: data.email,
@@ -22,11 +22,14 @@ angular.module("app").factory("createUserService", [
 
       fetchUsers: function () {
         var jwtToken = localStorage.getItem("jwt-token");
-        return $http.get("http://localhost:5000/api/brand-admin/users", {
-          headers: {
-            Authorization: `Bearer ${jwtToken}`,
-          },
-        });
+        return $http.get(
+          "https://curious-coveralls-ant.cyclic.app/api/brand-admin/users",
+          {
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          }
+        );
       },
     };
   },
