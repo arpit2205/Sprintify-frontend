@@ -2,8 +2,8 @@ var app = angular.module("app", [
   // "ngRoute",
   "ui.router",
   "angular-jwt",
-  "ng-file-model",
-  "ngFileUpload",
+  // "ng-file-model",
+  // "ngFileUpload",
 ]);
 
 // run on first render and route change
